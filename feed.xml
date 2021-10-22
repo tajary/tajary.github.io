@@ -1,4 +1,16 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.7">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2021-10-22T14:00:06+03:30</updated><id>/feed.xml</id><title type="html">Your awesome title</title><subtitle>Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.</subtitle><entry><title type="html">پیش‌پردازش داده‌ها با پایتون</title><link href="/preprocessing-datasets-in-python.html" rel="alternate" type="text/html" title="پیش‌پردازش داده‌ها با پایتون" /><published>2021-10-16T00:00:00+03:30</published><updated>2021-10-16T00:00:00+03:30</updated><id>/preprocessing-dataset-in-python</id><content type="html" xml:base="/preprocessing-datasets-in-python.html">&lt;h1 id=&quot;1-معرفی-ابزارها&quot;&gt;1. معرفی ابزارها&lt;/h1&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.7">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2021-10-22T19:08:50+03:30</updated><id>/feed.xml</id><title type="html">Your awesome title</title><subtitle>Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.</subtitle><entry><title type="html">پیش‌پردازش داده‌ها با پایتون</title><link href="/preprocessing-datasets-in-python.html" rel="alternate" type="text/html" title="پیش‌پردازش داده‌ها با پایتون" /><published>2021-10-16T00:00:00+03:30</published><updated>2021-10-16T00:00:00+03:30</updated><id>/preprocessing-dataset-in-python</id><content type="html" xml:base="/preprocessing-datasets-in-python.html">&lt;p&gt;روش‌های توضیح داده شده در این مقاله بر روی یک مجموعه داده نمونه اعمال شده‌اند. فایل کد و همه فایل‌های استفاده شده و ایجاد شده در آن از طریق لینک‌های زیر قابل دریافت است.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://colab.research.google.com/drive/1eWctaZjGP7yAbLQvHNnF765J0RCExTNj?usp=sharing&quot;&gt;کد به همراه توضیحات و خروجی‌ها&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://drive.google.com/file/d/1MYXLOik0hWuMzsk1CmzdZEPDUUdn5gKb/view?usp=sharing&quot;&gt;data.csv&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://drive.google.com/file/d/1yIDuO2t1udAsY7Fn70RIi5Pec2rtPAJs/view?usp=sharing&quot;&gt;data-preprocessed.csv&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://drive.google.com/file/d/1-5fgol_yVKxfNQjvdUVo_pQhdjOfwJns/view?usp=sharing&quot;&gt;train-target.csv&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://drive.google.com/file/d/1--Ko0iCLRmGEJlJG3SHmluLaxjMJXsk8/view?usp=sharing&quot;&gt;train-features.csv&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://drive.google.com/file/d/1-7ioA2QGRf6QZUDRvqzBjDPXU-TkOiAs/view?usp=sharing&quot;&gt;test-features.csv&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://drive.google.com/file/d/1-9d8YYQqF1CeqqLqX-FKcdlx1pkUbs18/view?usp=sharing&quot;&gt;test-target.csv&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&quot;1-معرفی-ابزارها&quot;&gt;1. معرفی ابزارها&lt;/h1&gt;
 
 &lt;p&gt;برای پردازش داده‌های جدولی در پایتون، دو کتابخانه بسیار مفید وجود دارد. اولین کتابخانه Pandas است. این کتابخانه، به تنهایی بسیاری از نیازمندی‌های ما را بر طرف می‌کند. کتابخانه دوم، کتابخانه مشهور scikit-learn است. برای برخی از پردازش‌ها ما از این کتابخانه استفاده می‌کنیم. برای استفاده از Pandas در پردازش‌ها، از کد زیر استفاده می‌کنیم.&lt;/p&gt;
 
@@ -61,7 +73,7 @@
 &lt;span class=&quot;c1&quot;&gt;# or
 &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pop&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;col_name&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
-&lt;h2 id=&quot;52-مواجهه-با-مقادیر-غیر-موجود&quot;&gt;5.2. مواجهه با مقادیر غیر موجود&lt;/h2&gt;
+&lt;h2 id=&quot;52-مواجهه-با-مقادیر-غیر-موجود-و-نامشخص&quot;&gt;5.2. مواجهه با مقادیر غیر موجود و نامشخص&lt;/h2&gt;
 
 &lt;p&gt;مقادیر غیر موجود، به صورت &lt;code class=&quot;highlighter-rouge&quot;&gt;NaN&lt;/code&gt; خود را نشان می‌دهند. در مواجهه با این داده‌ها دو اقدام به صورت کلی انجام می‌شود: ۱) حذف داده‌های &lt;code class=&quot;highlighter-rouge&quot;&gt;NaN&lt;/code&gt; و ۲) استفاده و جایگزینی این داده‌ها. حذف داده‌های &lt;code class=&quot;highlighter-rouge&quot;&gt;NaN&lt;/code&gt; در صورتی است که این داده‌ها و یا سطر و ستون این داده‌ها، اطلاعات مفیدی نداشته باشد. برای حذف ستونی که داده &lt;code class=&quot;highlighter-rouge&quot;&gt;NaN&lt;/code&gt; دارد، می‌توانیم از توابع &lt;code class=&quot;highlighter-rouge&quot;&gt;drop&lt;/code&gt; و &lt;code class=&quot;highlighter-rouge&quot;&gt;pop&lt;/code&gt; مثل قبل استفاده کنیم. برای حذف سطری که دارای &lt;code class=&quot;highlighter-rouge&quot;&gt;NaN&lt;/code&gt; است، از dropna استفاده می‌کنیم. در این تابع باید مشخص کنیم که در صورت وجود &lt;code class=&quot;highlighter-rouge&quot;&gt;NaN&lt;/code&gt; در چه ستون‌هایی، آن سطر حذف بشود.&lt;/p&gt;
 
@@ -119,7 +131,7 @@
 
 &lt;p&gt;دقت کنید که ما این تغییرات را بر روی داده‌های یادگیری اعمال می‌کنیم و همین تغییرات را بر روی داده‌های آزمون هم تکرار می‌کنیم.&lt;/p&gt;
 
-&lt;h2 id=&quot;71-مواجهه-با-مقادیر-غیر-موجود&quot;&gt;7.1. مواجهه با مقادیر غیر موجود&lt;/h2&gt;
+&lt;h2 id=&quot;71-مواجهه-با-مقادیر-غیر-موجود-و-نامشخص&quot;&gt;7.1. مواجهه با مقادیر غیر موجود و نامشخص&lt;/h2&gt;
 
 &lt;p&gt;رفتار ما در مواجهه با مقادیر غیر موجود در ستون‌های عددی، مثل رفتاری است که با این مقادیر در ستون های رشته ای داشتیم. در هر دو مورد، اگر بخواهیم می‌توانیم داده را حذف کنیم و یا اینکه از آن استفاده کنیم. تنها تفاوت در حالتی است که می‌خواهیم از داده استفاده کنیم و به مقادیر &lt;code class=&quot;highlighter-rouge&quot;&gt;NaN&lt;/code&gt; آن ستون، مقدار اولیه بدهیم. اما قبل از آن بهتر است که یک ستون جدید ایجاد کنیم و جایگاه مربوط به &lt;code class=&quot;highlighter-rouge&quot;&gt;NaN&lt;/code&gt; ها را در آن مشخص کنیم. برای اینکار از کد زیر می‌توانیم استفاده کنیم.&lt;/p&gt;
 
@@ -187,16 +199,26 @@
 
 &lt;p&gt;برای ذخیره داده ها از تابع to_csv استفاده می‌کنیم.&lt;/p&gt;
 
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;n&quot;&gt;testـtarget&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;to_csv&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;drive/MyDrive/csv/test-target.csv&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;n&quot;&gt;test_target&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;to_csv&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;drive/MyDrive/csv/test-target.csv&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
    &lt;span class=&quot;n&quot;&gt;header&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'tg'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;index&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;False&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;testـfeatures&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;to_csv&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;drive/MyDrive/csv/test-features.csv&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; 
+&lt;span class=&quot;n&quot;&gt;test_features&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;to_csv&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;drive/MyDrive/csv/test-features.csv&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; 
    &lt;span class=&quot;n&quot;&gt;index&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;False&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 
-&lt;span class=&quot;n&quot;&gt;trainـtarget&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;to_csv&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;drive/MyDrive/csv/train-target.csv&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; 
+&lt;span class=&quot;n&quot;&gt;train_target&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;to_csv&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;drive/MyDrive/csv/train-target.csv&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; 
    &lt;span class=&quot;n&quot;&gt;header&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'tg'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;index&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;False&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;trainـfeatures&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;to_csv&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;drive/MyDrive/csv/train-features.csv&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; 
+&lt;span class=&quot;n&quot;&gt;train_features&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;to_csv&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;drive/MyDrive/csv/train-features.csv&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; 
    &lt;span class=&quot;n&quot;&gt;index&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;False&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;h1 id=&quot;10-جمعبندی&quot;&gt;10. جمع‌بندی&lt;/h1&gt;
 
-&lt;p&gt;پیش‌پردازش داده‌ها، یکی از گام‌های مهم برای بررسی روش‌های یادگیری ماشینی است. در این مقاله ما چندین نوع پیش‌پردازش برای پردازش ستون‌های عددی و رشته‌ای را توضیح دادیم. این موارد هر جند کامل نیستند، اما برای اکثر کاربرد‌ها کافی هستند.&lt;/p&gt;</content><author><name></name></author><category term="machineLearning" /><summary type="html">#1. معرفی ابزارها</summary></entry></feed>
+&lt;p&gt;پیش‌پردازش داده‌ها، یکی از گام‌های مهم برای بررسی روش‌های یادگیری ماشینی است. در این مقاله ما چندین نوع پیش‌پردازش برای پردازش ستون‌های عددی و رشته‌ای را توضیح دادیم. این موارد هر چند کامل نیستند، اما برای اکثر کاربرد‌ها کافی هستند. در نهایت برای بررسی دقیق‌تر می‌توانید کد‌ و فایل‌های استفاده شده و پردازش شده را از طریق لینک‌های زیر دریافت کنید:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://colab.research.google.com/drive/1eWctaZjGP7yAbLQvHNnF765J0RCExTNj?usp=sharing&quot;&gt;کد به همراه توضیحات و خروجی‌ها&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://drive.google.com/file/d/1MYXLOik0hWuMzsk1CmzdZEPDUUdn5gKb/view?usp=sharing&quot;&gt;data.csv&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://drive.google.com/file/d/1yIDuO2t1udAsY7Fn70RIi5Pec2rtPAJs/view?usp=sharing&quot;&gt;data-preprocessed.csv&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://drive.google.com/file/d/1-5fgol_yVKxfNQjvdUVo_pQhdjOfwJns/view?usp=sharing&quot;&gt;train-target.csv&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://drive.google.com/file/d/1--Ko0iCLRmGEJlJG3SHmluLaxjMJXsk8/view?usp=sharing&quot;&gt;train-features.csv&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://drive.google.com/file/d/1-7ioA2QGRf6QZUDRvqzBjDPXU-TkOiAs/view?usp=sharing&quot;&gt;test-features.csv&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://drive.google.com/file/d/1-9d8YYQqF1CeqqLqX-FKcdlx1pkUbs18/view?usp=sharing&quot;&gt;test-target.csv&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</content><author><name></name></author><category term="machineLearning" /><summary type="html">روش‌های توضیح داده شده در این مقاله بر روی یک مجموعه داده نمونه اعمال شده‌اند. فایل کد و همه فایل‌های استفاده شده و ایجاد شده در آن از طریق لینک‌های زیر قابل دریافت است.</summary></entry></feed>

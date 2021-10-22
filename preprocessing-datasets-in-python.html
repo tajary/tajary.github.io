@@ -93,7 +93,7 @@
 <li class="toc-entry toc-h1"><a href="#5-پردازش-ستونهای-رشتهای">5. پردازش ستون‌های رشته‌ای</a>
 <ul>
 <li class="toc-entry toc-h2"><a href="#51-دادههای-بدون-اطلاعات">5.1. داده‌های بدون اطلاعات</a></li>
-<li class="toc-entry toc-h2"><a href="#52-مواجهه-با-مقادیر-غیر-موجود">5.2. مواجهه با مقادیر غیر موجود</a></li>
+<li class="toc-entry toc-h2"><a href="#52-مواجهه-با-مقادیر-غیر-موجود-و-نامشخص">5.2. مواجهه با مقادیر غیر موجود و نامشخص</a></li>
 <li class="toc-entry toc-h2"><a href="#53-دادههای-دستهبندی">5.3. داده‌های دسته‌بندی</a></li>
 </ul>
 </li>
@@ -104,7 +104,7 @@
 </li>
 <li class="toc-entry toc-h1"><a href="#7-پردازش-ستونهای-عددی">7. پردازش ستون‌های عددی</a>
 <ul>
-<li class="toc-entry toc-h2"><a href="#71-مواجهه-با-مقادیر-غیر-موجود">7.1. مواجهه با مقادیر غیر موجود</a></li>
+<li class="toc-entry toc-h2"><a href="#71-مواجهه-با-مقادیر-غیر-موجود-و-نامشخص">7.1. مواجهه با مقادیر غیر موجود و نامشخص</a></li>
 <li class="toc-entry toc-h2"><a href="#72-نرمالسازی">7.2. نرمال‌سازی</a></li>
 <li class="toc-entry toc-h2"><a href="#73-استاندارد-سازی">7.3. استاندارد سازی</a></li>
 <li class="toc-entry toc-h2"><a href="#74-دادههای-دستهبندی">7.4. داده‌های دسته‌بندی</a></li>
@@ -118,7 +118,19 @@
   </div>
   <div style="clear:both"></div>
   <div id="markdown-content">
-    <h1 id="1-معرفی-ابزارها">1. معرفی ابزارها</h1>
+    <p>روش‌های توضیح داده شده در این مقاله بر روی یک مجموعه داده نمونه اعمال شده‌اند. فایل کد و همه فایل‌های استفاده شده و ایجاد شده در آن از طریق لینک‌های زیر قابل دریافت است.</p>
+
+<ul>
+  <li><a href="https://colab.research.google.com/drive/1eWctaZjGP7yAbLQvHNnF765J0RCExTNj?usp=sharing">کد به همراه توضیحات و خروجی‌ها</a></li>
+  <li><a href="https://drive.google.com/file/d/1MYXLOik0hWuMzsk1CmzdZEPDUUdn5gKb/view?usp=sharing">data.csv</a></li>
+  <li><a href="https://drive.google.com/file/d/1yIDuO2t1udAsY7Fn70RIi5Pec2rtPAJs/view?usp=sharing">data-preprocessed.csv</a></li>
+  <li><a href="https://drive.google.com/file/d/1-5fgol_yVKxfNQjvdUVo_pQhdjOfwJns/view?usp=sharing">train-target.csv</a></li>
+  <li><a href="https://drive.google.com/file/d/1--Ko0iCLRmGEJlJG3SHmluLaxjMJXsk8/view?usp=sharing">train-features.csv</a></li>
+  <li><a href="https://drive.google.com/file/d/1-7ioA2QGRf6QZUDRvqzBjDPXU-TkOiAs/view?usp=sharing">test-features.csv</a></li>
+  <li><a href="https://drive.google.com/file/d/1-9d8YYQqF1CeqqLqX-FKcdlx1pkUbs18/view?usp=sharing">test-target.csv</a></li>
+</ul>
+
+<h1 id="1-معرفی-ابزارها">1. معرفی ابزارها</h1>
 
 <p>برای پردازش داده‌های جدولی در پایتون، دو کتابخانه بسیار مفید وجود دارد. اولین کتابخانه Pandas است. این کتابخانه، به تنهایی بسیاری از نیازمندی‌های ما را بر طرف می‌کند. کتابخانه دوم، کتابخانه مشهور scikit-learn است. برای برخی از پردازش‌ها ما از این کتابخانه استفاده می‌کنیم. برای استفاده از Pandas در پردازش‌ها، از کد زیر استفاده می‌کنیم.</p>
 
@@ -181,7 +193,7 @@
 <span class="c1"># or
 </span><span class="n">data</span><span class="p">.</span><span class="n">pop</span><span class="p">(</span><span class="s">"col_name"</span><span class="p">)</span></code></pre></figure>
 
-<h2 id="52-مواجهه-با-مقادیر-غیر-موجود">5.2. مواجهه با مقادیر غیر موجود</h2>
+<h2 id="52-مواجهه-با-مقادیر-غیر-موجود-و-نامشخص">5.2. مواجهه با مقادیر غیر موجود و نامشخص</h2>
 
 <p>مقادیر غیر موجود، به صورت <code class="highlighter-rouge">NaN</code> خود را نشان می‌دهند. در مواجهه با این داده‌ها دو اقدام به صورت کلی انجام می‌شود: ۱) حذف داده‌های <code class="highlighter-rouge">NaN</code> و ۲) استفاده و جایگزینی این داده‌ها. حذف داده‌های <code class="highlighter-rouge">NaN</code> در صورتی است که این داده‌ها و یا سطر و ستون این داده‌ها، اطلاعات مفیدی نداشته باشد. برای حذف ستونی که داده <code class="highlighter-rouge">NaN</code> دارد، می‌توانیم از توابع <code class="highlighter-rouge">drop</code> و <code class="highlighter-rouge">pop</code> مثل قبل استفاده کنیم. برای حذف سطری که دارای <code class="highlighter-rouge">NaN</code> است، از dropna استفاده می‌کنیم. در این تابع باید مشخص کنیم که در صورت وجود <code class="highlighter-rouge">NaN</code> در چه ستون‌هایی، آن سطر حذف بشود.</p>
 
@@ -239,7 +251,7 @@
 
 <p>دقت کنید که ما این تغییرات را بر روی داده‌های یادگیری اعمال می‌کنیم و همین تغییرات را بر روی داده‌های آزمون هم تکرار می‌کنیم.</p>
 
-<h2 id="71-مواجهه-با-مقادیر-غیر-موجود">7.1. مواجهه با مقادیر غیر موجود</h2>
+<h2 id="71-مواجهه-با-مقادیر-غیر-موجود-و-نامشخص">7.1. مواجهه با مقادیر غیر موجود و نامشخص</h2>
 
 <p>رفتار ما در مواجهه با مقادیر غیر موجود در ستون‌های عددی، مثل رفتاری است که با این مقادیر در ستون های رشته ای داشتیم. در هر دو مورد، اگر بخواهیم می‌توانیم داده را حذف کنیم و یا اینکه از آن استفاده کنیم. تنها تفاوت در حالتی است که می‌خواهیم از داده استفاده کنیم و به مقادیر <code class="highlighter-rouge">NaN</code> آن ستون، مقدار اولیه بدهیم. اما قبل از آن بهتر است که یک ستون جدید ایجاد کنیم و جایگاه مربوط به <code class="highlighter-rouge">NaN</code> ها را در آن مشخص کنیم. برای اینکار از کد زیر می‌توانیم استفاده کنیم.</p>
 
@@ -307,19 +319,30 @@
 
 <p>برای ذخیره داده ها از تابع to_csv استفاده می‌کنیم.</p>
 
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">testـtarget</span><span class="p">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s">"drive/MyDrive/csv/test-target.csv"</span><span class="p">,</span>
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">test_target</span><span class="p">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s">"drive/MyDrive/csv/test-target.csv"</span><span class="p">,</span>
    <span class="n">header</span><span class="o">=</span><span class="s">'tg'</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
-<span class="n">testـfeatures</span><span class="p">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s">"drive/MyDrive/csv/test-features.csv"</span><span class="p">,</span> 
+<span class="n">test_features</span><span class="p">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s">"drive/MyDrive/csv/test-features.csv"</span><span class="p">,</span> 
    <span class="n">index</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
 
-<span class="n">trainـtarget</span><span class="p">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s">"drive/MyDrive/csv/train-target.csv"</span><span class="p">,</span> 
+<span class="n">train_target</span><span class="p">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s">"drive/MyDrive/csv/train-target.csv"</span><span class="p">,</span> 
    <span class="n">header</span><span class="o">=</span><span class="s">'tg'</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
-<span class="n">trainـfeatures</span><span class="p">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s">"drive/MyDrive/csv/train-features.csv"</span><span class="p">,</span> 
+<span class="n">train_features</span><span class="p">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s">"drive/MyDrive/csv/train-features.csv"</span><span class="p">,</span> 
    <span class="n">index</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span></code></pre></figure>
 
 <h1 id="10-جمعبندی">10. جمع‌بندی</h1>
 
-<p>پیش‌پردازش داده‌ها، یکی از گام‌های مهم برای بررسی روش‌های یادگیری ماشینی است. در این مقاله ما چندین نوع پیش‌پردازش برای پردازش ستون‌های عددی و رشته‌ای را توضیح دادیم. این موارد هر جند کامل نیستند، اما برای اکثر کاربرد‌ها کافی هستند.</p>
+<p>پیش‌پردازش داده‌ها، یکی از گام‌های مهم برای بررسی روش‌های یادگیری ماشینی است. در این مقاله ما چندین نوع پیش‌پردازش برای پردازش ستون‌های عددی و رشته‌ای را توضیح دادیم. این موارد هر چند کامل نیستند، اما برای اکثر کاربرد‌ها کافی هستند. در نهایت برای بررسی دقیق‌تر می‌توانید کد‌ و فایل‌های استفاده شده و پردازش شده را از طریق لینک‌های زیر دریافت کنید:</p>
+
+<ul>
+  <li><a href="https://colab.research.google.com/drive/1eWctaZjGP7yAbLQvHNnF765J0RCExTNj?usp=sharing">کد به همراه توضیحات و خروجی‌ها</a></li>
+  <li><a href="https://drive.google.com/file/d/1MYXLOik0hWuMzsk1CmzdZEPDUUdn5gKb/view?usp=sharing">data.csv</a></li>
+  <li><a href="https://drive.google.com/file/d/1yIDuO2t1udAsY7Fn70RIi5Pec2rtPAJs/view?usp=sharing">data-preprocessed.csv</a></li>
+  <li><a href="https://drive.google.com/file/d/1-5fgol_yVKxfNQjvdUVo_pQhdjOfwJns/view?usp=sharing">train-target.csv</a></li>
+  <li><a href="https://drive.google.com/file/d/1--Ko0iCLRmGEJlJG3SHmluLaxjMJXsk8/view?usp=sharing">train-features.csv</a></li>
+  <li><a href="https://drive.google.com/file/d/1-7ioA2QGRf6QZUDRvqzBjDPXU-TkOiAs/view?usp=sharing">test-features.csv</a></li>
+  <li><a href="https://drive.google.com/file/d/1-9d8YYQqF1CeqqLqX-FKcdlx1pkUbs18/view?usp=sharing">test-target.csv</a></li>
+</ul>
+
 
   </div>
 </div>
