@@ -36,6 +36,20 @@ body {
   direction:rtl;
 }
 
+p{
+	text-align:justify;
+}
+
+.toc-entry.toc-h1 {
+	font-weight: bold;
+}
+.toc-entry.toc-h2 {
+	font-weight: normal;
+}
+
+.toc-entry.toc-h3 {
+	font-weight: normal;
+}
 
 #table-of-contents{
 	border:1px solid gray;
@@ -53,7 +67,7 @@ body {
 #table-of-contents ul{
 	list-style-type:none;
 	list-style:none none inside;
-	margin:0px;
+	margin:10px;
 	padding:0 ;
 }
 #table-of-contents ul li{
