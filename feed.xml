@@ -1,4 +1,445 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.7">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2021-10-22T19:08:50+03:30</updated><id>/feed.xml</id><title type="html">Your awesome title</title><subtitle>Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.</subtitle><entry><title type="html">پیش‌پردازش داده‌ها با پایتون</title><link href="/preprocessing-datasets-in-python.html" rel="alternate" type="text/html" title="پیش‌پردازش داده‌ها با پایتون" /><published>2021-10-16T00:00:00+03:30</published><updated>2021-10-16T00:00:00+03:30</updated><id>/preprocessing-dataset-in-python</id><content type="html" xml:base="/preprocessing-datasets-in-python.html">&lt;p&gt;روش‌های توضیح داده شده در این مقاله بر روی یک مجموعه داده نمونه اعمال شده‌اند. فایل کد و همه فایل‌های استفاده شده و ایجاد شده در آن از طریق لینک‌های زیر قابل دریافت است.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.7">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2021-10-29T19:39:16+03:30</updated><id>/feed.xml</id><title type="html">Your awesome title</title><subtitle>Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.</subtitle><entry><title type="html">ساخت یک شبکه عصبی پرسپترون چند لایه برای دسته‌بندی دوتایی در پایتون</title><link href="/designing-an-mlp-for-binary-classification-in-python.html" rel="alternate" type="text/html" title="ساخت یک شبکه عصبی پرسپترون چند لایه برای دسته‌بندی دوتایی در پایتون" /><published>2021-10-29T00:00:00+03:30</published><updated>2021-10-29T00:00:00+03:30</updated><id>/designing-a-mlp-in-python</id><content type="html" xml:base="/designing-an-mlp-for-binary-classification-in-python.html">&lt;p&gt;روش‌های توضیح داده شده در این مقاله بر روی یک مجموعه داده نمونه اعمال شده‌اند. فایل کد و همه فایل‌های استفاده شده از طریق لینک‌ زیر قابل دریافت است.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://drive.google.com/drive/folders/1tSGDQ77MdfAb8mUiLSglFyCaydCg8tFN?usp=sharing&quot;&gt;پوشه شامل‌ها همه کد‌ها و داده‌ها&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&quot;1-گام-اول-خواندن-دادهها&quot;&gt;1. گام اول: خواندن داده‌ها&lt;/h1&gt;
+
+&lt;p&gt;قبل از طراحی شبکه، باید داده‌هایی را که می‌خواهیم پردازش کنیم، بخوانیم. برای خواندن داده ها از کتابخانه Pandas استفاده می‌کنیم. در این مقاله داده‌ها به صورت آماده وجود دارند. در صورتی که با نحوه آماده سازی داده ها آشنایی ندارید، می‌توانید مقاله &lt;a href=&quot;/preprocessing-datasets-in-python.html&quot;&gt;پیش‌پردازش داده‌ها با پایتون&lt;/a&gt; را مطالعه کنید.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;pandas&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pd&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;basePath&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;/content/drive/MyDrive/blog/mlp-binary-classification/&quot;&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;train_feats&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pd&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;read_csv&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;basePath&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;train_feats.csv&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;test_feats&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pd&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;read_csv&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;basePath&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;test_feats.csv&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;train_target&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pd&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;read_csv&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;basePath&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;train_target.csv&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;test_target&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pd&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;read_csv&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;basePath&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;test_target.csv&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;برای مشاهده و بررسی داده‌ها می‌توانیم از describe استفاده کنیم. دقت کنید که همه مقادیر مربوط به داده‌های یادگیری بین 0 و 1 هستند. اما در مورد داده های آزمون، ممکن است اینطور نباشد. مثلا کمترین مقدار یک ستون از 0 کمتر باشد و بیشترین مقدار یک ستون از 1 بیشتر باشد. در مورد داده‌های ما، این اتقاق افتاده است.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;n&quot;&gt;train_feats&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;describe&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;include&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'all'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;div class=&quot;dfHolder&quot;&gt;
+&lt;table class=&quot;dataframe&quot; border=&quot;1&quot;&gt;
+  &lt;thead&gt;
+    &lt;tr style=&quot;text-align: right;&quot;&gt;
+      &lt;th&gt;&lt;/th&gt;
+      &lt;th&gt;intercolumnar distance&lt;/th&gt;
+      &lt;th&gt;upper margin&lt;/th&gt;
+      &lt;th&gt;lower margin&lt;/th&gt;
+      &lt;th&gt;exploitation&lt;/th&gt;
+      &lt;th&gt;row number&lt;/th&gt;
+      &lt;th&gt;modular ratio&lt;/th&gt;
+      &lt;th&gt;interlinear spacing&lt;/th&gt;
+      &lt;th&gt;weight&lt;/th&gt;
+      &lt;th&gt;peak number&lt;/th&gt;
+      &lt;th&gt;modular ratio/ interlinear spacing&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;th&gt;count&lt;/th&gt;
+      &lt;td&gt;8344.000000&lt;/td&gt;
+      &lt;td&gt;8344.000000&lt;/td&gt;
+      &lt;td&gt;8344.000000&lt;/td&gt;
+      &lt;td&gt;8344.000000&lt;/td&gt;
+      &lt;td&gt;8344.000000&lt;/td&gt;
+      &lt;td&gt;8344.000000&lt;/td&gt;
+      &lt;td&gt;8344.000000&lt;/td&gt;
+      &lt;td&gt;8344.000000&lt;/td&gt;
+      &lt;td&gt;8344.000000&lt;/td&gt;
+      &lt;td&gt;8344.000000&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;mean&lt;/th&gt;
+      &lt;td&gt;0.228808&lt;/td&gt;
+      &lt;td&gt;0.006362&lt;/td&gt;
+      &lt;td&gt;0.060381&lt;/td&gt;
+      &lt;td&gt;0.576617&lt;/td&gt;
+      &lt;td&gt;0.822838&lt;/td&gt;
+      &lt;td&gt;0.123502&lt;/td&gt;
+      &lt;td&gt;0.125857&lt;/td&gt;
+      &lt;td&gt;0.240800&lt;/td&gt;
+      &lt;td&gt;0.110971&lt;/td&gt;
+      &lt;td&gt;0.589626&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;std&lt;/th&gt;
+      &lt;td&gt;0.066259&lt;/td&gt;
+      &lt;td&gt;0.011215&lt;/td&gt;
+      &lt;td&gt;0.021374&lt;/td&gt;
+      &lt;td&gt;0.106865&lt;/td&gt;
+      &lt;td&gt;0.164919&lt;/td&gt;
+      &lt;td&gt;0.019067&lt;/td&gt;
+      &lt;td&gt;0.014573&lt;/td&gt;
+      &lt;td&gt;0.058065&lt;/td&gt;
+      &lt;td&gt;0.022422&lt;/td&gt;
+      &lt;td&gt;0.088562&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr style=&quot;background-color:yellow&quot;&gt;
+      &lt;th&gt;min&lt;/th&gt;
+      &lt;td&gt;0.000000&lt;/td&gt;
+      &lt;td&gt;0.000000&lt;/td&gt;
+      &lt;td&gt;0.000000&lt;/td&gt;
+      &lt;td&gt;0.000000&lt;/td&gt;
+      &lt;td&gt;0.000000&lt;/td&gt;
+      &lt;td&gt;0.000000&lt;/td&gt;
+      &lt;td&gt;0.000000&lt;/td&gt;
+      &lt;td&gt;0.000000&lt;/td&gt;
+      &lt;td&gt;0.000000&lt;/td&gt;
+      &lt;td&gt;0.000000&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;25%&lt;/th&gt;
+      &lt;td&gt;0.219984&lt;/td&gt;
+      &lt;td&gt;0.005579&lt;/td&gt;
+      &lt;td&gt;0.061623&lt;/td&gt;
+      &lt;td&gt;0.521054&lt;/td&gt;
+      &lt;td&gt;0.850746&lt;/td&gt;
+      &lt;td&gt;0.113343&lt;/td&gt;
+      &lt;td&gt;0.125258&lt;/td&gt;
+      &lt;td&gt;0.208556&lt;/td&gt;
+      &lt;td&gt;0.103337&lt;/td&gt;
+      &lt;td&gt;0.543997&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;50%&lt;/th&gt;
+      &lt;td&gt;0.231265&lt;/td&gt;
+      &lt;td&gt;0.006104&lt;/td&gt;
+      &lt;td&gt;0.064430&lt;/td&gt;
+      &lt;td&gt;0.586549&lt;/td&gt;
+      &lt;td&gt;0.865672&lt;/td&gt;
+      &lt;td&gt;0.122273&lt;/td&gt;
+      &lt;td&gt;0.128041&lt;/td&gt;
+      &lt;td&gt;0.246615&lt;/td&gt;
+      &lt;td&gt;0.112159&lt;/td&gt;
+      &lt;td&gt;0.586422&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;75%&lt;/th&gt;
+      &lt;td&gt;0.241741&lt;/td&gt;
+      &lt;td&gt;0.006771&lt;/td&gt;
+      &lt;td&gt;0.066970&lt;/td&gt;
+      &lt;td&gt;0.646610&lt;/td&gt;
+      &lt;td&gt;0.865672&lt;/td&gt;
+      &lt;td&gt;0.132577&lt;/td&gt;
+      &lt;td&gt;0.130427&lt;/td&gt;
+      &lt;td&gt;0.278269&lt;/td&gt;
+      &lt;td&gt;0.120980&lt;/td&gt;
+      &lt;td&gt;0.636167&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr style=&quot;background-color:yellow&quot;&gt;
+      &lt;th&gt;max&lt;/th&gt;
+      &lt;td&gt;1.000000&lt;/td&gt;
+      &lt;td&gt;1.000000&lt;/td&gt;
+      &lt;td&gt;1.000000&lt;/td&gt;
+      &lt;td&gt;1.000000&lt;/td&gt;
+      &lt;td&gt;1.000000&lt;/td&gt;
+      &lt;td&gt;1.000000&lt;/td&gt;
+      &lt;td&gt;1.000000&lt;/td&gt;
+      &lt;td&gt;1.000000&lt;/td&gt;
+      &lt;td&gt;1.000000&lt;/td&gt;
+      &lt;td&gt;1.000000&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;/div&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;n&quot;&gt;test_feats&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;describe&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;include&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'all'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;div class=&quot;dfHolder&quot;&gt;
+&lt;table class=&quot;dataframe&quot; border=&quot;1&quot;&gt;
+  &lt;thead&gt;
+    &lt;tr style=&quot;text-align: right;&quot;&gt;
+      &lt;th&gt;&lt;/th&gt;
+      &lt;th&gt;intercolumnar distance&lt;/th&gt;
+      &lt;th&gt;upper margin&lt;/th&gt;
+      &lt;th&gt;lower margin&lt;/th&gt;
+      &lt;th&gt;exploitation&lt;/th&gt;
+      &lt;th&gt;row number&lt;/th&gt;
+      &lt;th&gt;modular ratio&lt;/th&gt;
+      &lt;th&gt;interlinear spacing&lt;/th&gt;
+      &lt;th&gt;weight&lt;/th&gt;
+      &lt;th&gt;peak number&lt;/th&gt;
+      &lt;th&gt;modular ratio/ interlinear spacing&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;th&gt;count&lt;/th&gt;
+      &lt;td&gt;2086.000000&lt;/td&gt;
+      &lt;td&gt;2086.000000&lt;/td&gt;
+      &lt;td&gt;2086.000000&lt;/td&gt;
+      &lt;td&gt;2086.000000&lt;/td&gt;
+      &lt;td&gt;2086.000000&lt;/td&gt;
+      &lt;td&gt;2086.000000&lt;/td&gt;
+      &lt;td&gt;2086.000000&lt;/td&gt;
+      &lt;td&gt;2086.000000&lt;/td&gt;
+      &lt;td&gt;2086.000000&lt;/td&gt;
+      &lt;td&gt;2086.000000&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;mean&lt;/th&gt;
+      &lt;td&gt;0.227047&lt;/td&gt;
+      &lt;td&gt;0.006223&lt;/td&gt;
+      &lt;td&gt;0.060109&lt;/td&gt;
+      &lt;td&gt;0.577577&lt;/td&gt;
+      &lt;td&gt;0.823801&lt;/td&gt;
+      &lt;td&gt;0.123378&lt;/td&gt;
+      &lt;td&gt;0.125475&lt;/td&gt;
+      &lt;td&gt;0.240850&lt;/td&gt;
+      &lt;td&gt;0.111739&lt;/td&gt;
+      &lt;td&gt;0.591369&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;std&lt;/th&gt;
+      &lt;td&gt;0.058152&lt;/td&gt;
+      &lt;td&gt;0.002522&lt;/td&gt;
+      &lt;td&gt;0.019715&lt;/td&gt;
+      &lt;td&gt;0.107459&lt;/td&gt;
+      &lt;td&gt;0.168651&lt;/td&gt;
+      &lt;td&gt;0.016779&lt;/td&gt;
+      &lt;td&gt;0.010388&lt;/td&gt;
+      &lt;td&gt;0.057144&lt;/td&gt;
+      &lt;td&gt;0.020103&lt;/td&gt;
+      &lt;td&gt;0.087831&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;min&lt;/th&gt;
+      &lt;td&gt;0.000000&lt;/td&gt;
+      &lt;td&gt;0.000000&lt;/td&gt;
+      &lt;td&gt;0.000000&lt;/td&gt;
+      &lt;td&gt;0.000000&lt;/td&gt;
+      &lt;td&gt;0.000000&lt;/td&gt;
+      &lt;td style=&quot;background-color:yellow&quot;&gt;0.059076&lt;/td&gt;
+      &lt;td&gt;0.000000&lt;/td&gt;
+      &lt;td style=&quot;background-color:yellow&quot;&gt;-0.004785&lt;/td&gt;
+      &lt;td&gt;0.020163&lt;/td&gt;
+      &lt;td&gt;0.000000&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;25%&lt;/th&gt;
+      &lt;td&gt;0.219984&lt;/td&gt;
+      &lt;td&gt;0.005559&lt;/td&gt;
+      &lt;td&gt;0.061490&lt;/td&gt;
+      &lt;td&gt;0.521054&lt;/td&gt;
+      &lt;td&gt;0.850746&lt;/td&gt;
+      &lt;td&gt;0.113343&lt;/td&gt;
+      &lt;td&gt;0.125158&lt;/td&gt;
+      &lt;td&gt;0.209811&lt;/td&gt;
+      &lt;td&gt;0.103967&lt;/td&gt;
+      &lt;td&gt;0.547212&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;50%&lt;/th&gt;
+      &lt;td&gt;0.231265&lt;/td&gt;
+      &lt;td&gt;0.006084&lt;/td&gt;
+      &lt;td&gt;0.064364&lt;/td&gt;
+      &lt;td&gt;0.588473&lt;/td&gt;
+      &lt;td&gt;0.865672&lt;/td&gt;
+      &lt;td&gt;0.122273&lt;/td&gt;
+      &lt;td&gt;0.128041&lt;/td&gt;
+      &lt;td&gt;0.246857&lt;/td&gt;
+      &lt;td&gt;0.112789&lt;/td&gt;
+      &lt;td&gt;0.588782&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;75%&lt;/th&gt;
+      &lt;td&gt;0.242546&lt;/td&gt;
+      &lt;td&gt;0.006771&lt;/td&gt;
+      &lt;td&gt;0.066970&lt;/td&gt;
+      &lt;td&gt;0.649325&lt;/td&gt;
+      &lt;td&gt;0.865672&lt;/td&gt;
+      &lt;td&gt;0.132577&lt;/td&gt;
+      &lt;td&gt;0.130427&lt;/td&gt;
+      &lt;td&gt;0.276956&lt;/td&gt;
+      &lt;td&gt;0.121610&lt;/td&gt;
+      &lt;td&gt;0.637185&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;max&lt;/th&gt;
+      &lt;td&gt;1.000000&lt;/td&gt;
+      &lt;td style=&quot;background-color:yellow&quot;&gt;0.056373&lt;/td&gt;
+      &lt;td&gt;0.200509&lt;/td&gt;
+      &lt;td&gt;1.000000&lt;/td&gt;
+      &lt;td&gt;1.000000&lt;/td&gt;
+      &lt;td&gt;0.204017&lt;/td&gt;
+      &lt;td&gt;0.179735&lt;/td&gt;
+      &lt;td&gt;0.470199&lt;/td&gt;
+      &lt;td&gt;0.170758&lt;/td&gt;
+      &lt;td&gt;0.939281&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;/div&gt;
+
+&lt;p&gt;مقدار هدف (target) برای همه ویژگی‌ها در داده‌های یادگیری و آزمون، یا 0 است و یا 1.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;n&quot;&gt;train_target&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;value_counts&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;Class
+0        4876
+1        3468
+dtype: int64&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;n&quot;&gt;test_target&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;value_counts&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;Class
+0        1268
+1         818
+dtype: int64&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h1 id=&quot;2-گام-دوم-طراحی-لایههای-شبکه-عصبی&quot;&gt;2. گام دوم: طراحی لایه‌های شبکه عصبی&lt;/h1&gt;
+
+&lt;p&gt;ابتدا پکیج‌های مورد نیاز را import می‌کنیم.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;keras.models&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Sequential&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;keras.layers&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Dense&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;برای ایجاد شبکه‌های عصبی پرسپترون چند لایه، از مدل Sequential استفاده می‌کنیم. 
+در این مدل، لایه‌های شبکه عصبی به صورت پشت سر‌هم قرار می‌گیرند. برای این مدل، ۶ لایه در نظر گرفتیم. همه این لایه‌ها از نوع Dense هستند. در لایه‌های Dense، همه ورودی‌های لایه به همه نرون‌ها متصل می‌شوند. اولین پارامتر Dense، تعداد خروجی لایه Dense است. برای اولین لایه Dense، باید تعداد ورودی‌های لایه را هم مشخص کنیم. تعداد ورودی‌های اولین لایه برابر است با تعداد ویژگی‌ها. تعداد ویژگی‌ها هم از طریق &lt;code class=&quot;highlighter-rouge&quot;&gt;train_feats.shape[1]&lt;/code&gt; به دست می‌آید. البته به جای &lt;code class=&quot;highlighter-rouge&quot;&gt;train_feats.shape[1]&lt;/code&gt; می‌توانیم مقدار آن که در این مثال ما برابر با 10 است را بنویسیم. برای لایه‌های بعدی، تعیین تعداد خروجی‌های لایه کافی است. تعداد ورودی‌های لایه‌های بعد، برابر است با تعداد خروجی‌های لایه قبل. برای شبکه‌های عصبی عمیق، معمولا تابع فعالسازی &lt;code class=&quot;highlighter-rouge&quot;&gt;relu&lt;/code&gt; در نظر گرفته می‌شود. برای لایه آخر، با توجه به اینکه مسئله ما دسته بندی دوتایی است، تابع فعال سازی را &lt;code class=&quot;highlighter-rouge&quot;&gt;sigmoid&lt;/code&gt; و تعداد خروجی‌ها را &lt;code class=&quot;highlighter-rouge&quot;&gt;1&lt;/code&gt; در نظر گرفتیم.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;n&quot;&gt;model&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Sequential&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;model&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;add&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Dense&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;20&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;activation&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'relu'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;input_dim&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;train_feats&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;shape&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]))&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;model&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;add&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Dense&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;80&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;activation&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'relu'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;model&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;add&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Dense&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;40&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;activation&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'relu'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;model&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;add&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Dense&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;20&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;activation&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'relu'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;model&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;add&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Dense&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;activation&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'relu'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;model&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;add&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Dense&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;activation&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'sigmoid'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h1 id=&quot;3-گام-سوم-تعیین-نحوه-آموزش-شبکه-عصبی-و-معیار-ارزیابی&quot;&gt;3. گام سوم: تعیین نحوه آموزش شبکه عصبی و معیار ارزیابی&lt;/h1&gt;
+
+&lt;p&gt;برای تعیین نحوه آموزش شبکه عصبی باید دو پارامتر اصلی را تعیین کنیم.&lt;/p&gt;
+
+&lt;p&gt;پارامتر اول، تابع &lt;code class=&quot;highlighter-rouge&quot;&gt;loss&lt;/code&gt; است. این تابع مشخص می‌کند که مقدار یادگرفته شده تا چه اندازه با مقدار واقعی اخلاف دارد. هر چه مقدار این تابع کمتر باشد، یادگیری بهتر انجام شده است. برای مسئله ما (دسته‌بندی دو کلاسه) تابع &lt;code class=&quot;highlighter-rouge&quot;&gt;binary_crossentropy&lt;/code&gt;، بهترین گزینه است. برای مسئل دیگر مانند دسته بندی چند کلاسه و یا رگرسیون، توابع &lt;code class=&quot;highlighter-rouge&quot;&gt;loss&lt;/code&gt; 
+دیگری وجود دارد.&lt;/p&gt;
+
+&lt;p&gt;پارامتر دوم، تابع بهینه‌ساز و یا optimizer است. این تابع تعیین می‌کند که با توجه به مقدار &lt;code class=&quot;highlighter-rouge&quot;&gt;loss&lt;/code&gt; چگونه، ضرایب وزن‌های شبکه را باید تغییر داد. در این مثال ما از &lt;code class=&quot;highlighter-rouge&quot;&gt;adam&lt;/code&gt; استفاده کردیم. توابع بهینه‌سازی دیگری هم وجود دارد که می‌شد از آن‌ها استفاده کرد.&lt;/p&gt;
+
+&lt;p&gt;معیاری که ما برای ارزیابی از آن استفاده می‌کنیم، دقت و یا &lt;code class=&quot;highlighter-rouge&quot;&gt;accuracy&lt;/code&gt; است. در پارامتر &lt;code class=&quot;highlighter-rouge&quot;&gt;metrics&lt;/code&gt; این معیار را مشخص کردیم. می‌توانیم از معیار‌های دیگر هم استفاده کنیم.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;n&quot;&gt;model&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;compile&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;optimizer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'adam'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; 
+  &lt;span class=&quot;n&quot;&gt;loss&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'binary_crossentropy'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; 
+  &lt;span class=&quot;n&quot;&gt;metrics&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'accuracy'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h2 id=&quot;31-مشاهده-شبکه-عصبی&quot;&gt;3.1. مشاهده شبکه عصبی&lt;/h2&gt;
+
+&lt;p&gt;یکی از امکانات خوب &lt;code class=&quot;highlighter-rouge&quot;&gt;keras&lt;/code&gt; امکان دیدن مدلی است که طراحی کردیم. با کمک دستور زیر، می‌توانیم مدل را ببینیم.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;n&quot;&gt;model&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;summary&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;Model: &quot;sequential_5&quot;
+_________________________________________________________________
+Layer (type)                 Output Shape              Param #   
+=================================================================
+dense_19 (Dense)             (None, 20)                220       
+_________________________________________________________________
+dense_20 (Dense)             (None, 80)                1680      
+_________________________________________________________________
+dense_21 (Dense)             (None, 40)                3240      
+_________________________________________________________________
+dense_22 (Dense)             (None, 20)                820       
+_________________________________________________________________
+dense_23 (Dense)             (None, 10)                210       
+_________________________________________________________________
+dense_24 (Dense)             (None, 1)                 11        
+=================================================================
+Total params: 6,181
+Trainable params: 6,181
+Non-trainable params: 0&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h1 id=&quot;4-گام-چهارم-آموزش-شبکه&quot;&gt;4. گام چهارم: آموزش شبکه&lt;/h1&gt;
+
+&lt;p&gt;برای آموزش شبکه، از تابع &lt;code class=&quot;highlighter-rouge&quot;&gt;fit&lt;/code&gt; بر روی مدل استفاده می‌کنیم. در این تابع، باید همه داده‌های یادگیری را در قالب بردار ویژگی‌ها و بردار هدف تعیین کنیم. در این مثال توجه داشته باشید که مقدار هدف در ستونی با نام &lt;code class=&quot;highlighter-rouge&quot;&gt;Class&lt;/code&gt; در &lt;code class=&quot;highlighter-rouge&quot;&gt;train_target&lt;/code&gt; قرار دارد. پارامتر &lt;code class=&quot;highlighter-rouge&quot;&gt;epochs&lt;/code&gt; تعیین می‌کند که چند بار باید کل داده‌های یادگیری را به شبکه بدهیم. پارامتر &lt;code class=&quot;highlighter-rouge&quot;&gt;batch_size&lt;/code&gt; تعین می‌کند که داده‌ها را چند تا چند تا به شبکه بدهیم. در این مثال ما داده‌ها را ۵۱۲ نمونه (=سطر)، ۵۱۲ نمونه، به شبکه می‌دهیم. پارمتر &lt;code class=&quot;highlighter-rouge&quot;&gt;validation_split&lt;/code&gt; برای جدا کردن بخشی از داده های یادگیری برای ارزیابی است. در هر مرحله یادگیری بر روی داده های ارزیابی انجام نمی‌شود. از این داده ها برای ارزیابی داخلی استفاده می‌کنیم. ارزیابی اصلی با داده های آزمون است. خروجی تابع &lt;code class=&quot;highlighter-rouge&quot;&gt;fit&lt;/code&gt; یک شی است که داده‌های مفیدی از فرآیند آموزش دارد. در گام بعد ما این داده‌ها را نشان می‌دهیم. با ارزیابی این داده‌ها، می‌توانیم وضعیت یادگیری شبکه را بسنجیم. بیشترین زمان اجرا، مربوط به این تابع است.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;n&quot;&gt;history&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;model&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fit&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;train_feats&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;train_target&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'Class'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;batch_size&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;512&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; 
+    &lt;span class=&quot;n&quot;&gt;epochs&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;4000&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;validation_split&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;0.2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;بخشی از خروجی این تابع به صورت زیر است:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;Epoch 3995/4000
+14/14 [==============================] - 0s 10ms/step - loss: 0.1903 - accuracy: 0.9128 - val_loss: 0.5907 - val_accuracy: 0.8556
+Epoch 3996/4000
+14/14 [==============================] - 0s 9ms/step - loss: 0.1908 - accuracy: 0.9091 - val_loss: 0.5949 - val_accuracy: 0.8616
+Epoch 3997/4000
+14/14 [==============================] - 0s 8ms/step - loss: 0.1856 - accuracy: 0.9139 - val_loss: 0.5940 - val_accuracy: 0.8646
+Epoch 3998/4000
+14/14 [==============================] - 0s 10ms/step - loss: 0.1883 - accuracy: 0.9110 - val_loss: 0.6269 - val_accuracy: 0.8448
+Epoch 3999/4000
+14/14 [==============================] - 0s 11ms/step - loss: 0.2196 - accuracy: 0.8953 - val_loss: 0.5928 - val_accuracy: 0.8652
+Epoch 4000/4000
+14/14 [==============================] - 0s 9ms/step - loss: 0.2018 - accuracy: 0.9041 - val_loss: 0.5811 - val_accuracy: 0.8592&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h1 id=&quot;5-گام-پنجم-ارزیابی-شبکه-در-حین-آموزش&quot;&gt;5. گام پنجم: ارزیابی شبکه در حین آموزش&lt;/h1&gt;
+
+&lt;p&gt;خروجی تابع &lt;code class=&quot;highlighter-rouge&quot;&gt;fit&lt;/code&gt; در کد قبل، متغیر &lt;code class=&quot;highlighter-rouge&quot;&gt;history&lt;/code&gt; است. در این متغیر، اطلاعات مربوط به فرآیند یادگیری وجود دارد. یکی از مهمترین این اطلاعات، مقدار &lt;code class=&quot;highlighter-rouge&quot;&gt;loss&lt;/code&gt; و &lt;code class=&quot;highlighter-rouge&quot;&gt;val_loss&lt;/code&gt; به ازای هر &lt;code class=&quot;highlighter-rouge&quot;&gt;epoch&lt;/code&gt; است. &lt;code class=&quot;highlighter-rouge&quot;&gt;loss&lt;/code&gt; نشان دهنده میزان loss بر روی داده های یادگیری و &lt;code class=&quot;highlighter-rouge&quot;&gt;val_loss&lt;/code&gt; نشان‌دهنده میزان loss بر روی داده‌های ارزیابی (validation) است. 
+با استفاده از کتابخانه &lt;code class=&quot;highlighter-rouge&quot;&gt;matplotlib&lt;/code&gt; می‌توانیم نمودار این مقادیر را رسم کنیم.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;matplotlib.pyplot&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;plt&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;در کد پایین، رسم نمودار توسط دو خط بالا انجام می‌شود؛ نمایش نمودار نیز در خط آخر انجام می‌شود. چهار خط میانی، عناوین ستون ها و نمودار را مشخص می‌کنند.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;n&quot;&gt;plt&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;plot&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;history&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;history&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'loss'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;plt&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;plot&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;history&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;history&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'val_loss'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;plt&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;title&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'Model loss'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;plt&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ylabel&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'Loss'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;plt&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;xlabel&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'Epoch'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;plt&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;legend&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'Train'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'Validation'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;loc&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'upper left'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;plt&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;show&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;نمودار خروجی به صورت زیر است:&lt;/p&gt;
+
+&lt;figure class=&quot;image&quot;&gt;
+  &lt;!--&lt;a href=&quot;/assets/posts/designing-an-mlp/loss.png&quot;&gt;&lt;img src=&quot;/assets/posts/designing-an-mlp/loss.png&quot; alt=&quot;میزان loss برای داده‌های یادگیری و ارزیابی در حین آموزش&quot;&gt;&lt;/a&gt;--&gt;
+  &lt;img src=&quot;/assets/posts/designing-an-mlp/loss.png&quot; alt=&quot;میزان loss برای داده‌های یادگیری و ارزیابی در حین آموزش&quot; /&gt;
+  &lt;figcaption&gt;میزان loss برای داده‌های یادگیری و ارزیابی در حین آموزش&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;همچنین، از آنجا که ما معیار دقت (accuracy) را هم به عنوان یکی از معیار‌های ارزیابی در تابع &lt;code class=&quot;highlighter-rouge&quot;&gt;compile&lt;/code&gt; معرفی کردیم، می‌توانیم میزان دقت در حین یادگیری را بر روی داده های یادگیری و ارزیابی مشاهده کنیم. کد زیر اینکار را انجام می‌دهد.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;n&quot;&gt;plt&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;plot&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;history&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;history&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'accuracy'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;plt&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;plot&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;history&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;history&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'val_accuracy'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;plt&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;title&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'Model accuracy'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;plt&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ylabel&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'Accuracy'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;plt&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;xlabel&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'Epoch'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;plt&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;legend&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'Train'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'Validation'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;loc&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'upper left'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;plt&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;show&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;نمودار خروجی به صورت زیر است. همانطور که مشخص است، مقدار دقت برای داده های یادگیری نزدیک به 90% و برای داده‌های ارزیابی حدود 86% است.&lt;/p&gt;
+
+&lt;figure class=&quot;image&quot;&gt;
+  &lt;!--&lt;a href=&quot;/assets/posts/designing-an-mlp/accuracy.png&quot;&gt;&lt;img src=&quot;/assets/posts/designing-an-mlp/accuracy.png&quot; alt=&quot;میزان دقت برای داده‌های یادگیری و ارزیابی در حین آموزش&quot;&gt;&lt;/a&gt;--&gt;
+  &lt;img src=&quot;/assets/posts/designing-an-mlp/accuracy.png&quot; alt=&quot;میزان دقت برای داده‌های یادگیری و ارزیابی در حین آموزش&quot; /&gt;
+  &lt;figcaption&gt;میزان دقت برای داده‌های یادگیری و ارزیابی در حین آموزش&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;h1 id=&quot;6-گام-ششم-ارزیابی-شبکه-بر-روی-داده-های-آزمون&quot;&gt;6. گام ششم: ارزیابی شبکه بر روی داده های آزمون&lt;/h1&gt;
+
+&lt;p&gt;برای ارزیابی شبکه بر روی داده‌های آزمون از تابع &lt;code class=&quot;highlighter-rouge&quot;&gt;evaluate&lt;/code&gt; بر روی مدل استفاده می‌کنیم. در اینجا ما به دقت 86% بر روی داد‌ه‌های آزمون رسیدیم.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;n&quot;&gt;test_loss&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;test_accuracy&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;model&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;evaluate&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;test_feats&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;test_target&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'Class'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;66/66 [==============================] - 0s 1ms/step - loss: 0.3953 - accuracy: 0.8634&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h1 id=&quot;7-جمعبندی&quot;&gt;7. جمع‌بندی&lt;/h1&gt;
+
+&lt;p&gt;در این مقاله، ما نحوه ساخت یک شبکه عصبی برای دسته بندی دو کلاسه با استفاده از کتابخانه keras در پایتون را توضیح دادیم. همانطور که دیدیم، این‌کار خیلی راحت است. نکته مهمی که در این مقاله به آن نپرداختیم، نحوه بهبود مدل است. ان‌شالله در مقاله‌های بعدی به این موارد خواهیم پرداخت.
+شما برای بررسی دقیق‌تر این‌مقاله، می‌توانید همه کد‌ها و فایل‌های استفاده شده را از طریق لینک‌ زیر دریافت کنید:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://drive.google.com/drive/folders/1tSGDQ77MdfAb8mUiLSglFyCaydCg8tFN?usp=sharing&quot;&gt;پوشه شامل‌ها همه کد‌ها و داده‌ها&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</content><author><name></name></author><category term="machineLearning" /><summary type="html">روش‌های توضیح داده شده در این مقاله بر روی یک مجموعه داده نمونه اعمال شده‌اند. فایل کد و همه فایل‌های استفاده شده از طریق لینک‌ زیر قابل دریافت است.</summary></entry><entry><title type="html">پیش‌پردازش داده‌ها با پایتون</title><link href="/preprocessing-datasets-in-python.html" rel="alternate" type="text/html" title="پیش‌پردازش داده‌ها با پایتون" /><published>2021-10-16T00:00:00+03:30</published><updated>2021-10-16T00:00:00+03:30</updated><id>/preprocessing-dataset-in-python</id><content type="html" xml:base="/preprocessing-datasets-in-python.html">&lt;p&gt;روش‌های توضیح داده شده در این مقاله بر روی یک مجموعه داده نمونه اعمال شده‌اند. فایل کد و همه فایل‌های استفاده شده و ایجاد شده در آن از طریق لینک‌های زیر قابل دریافت است.&lt;/p&gt;
 
 &lt;ul&gt;
   &lt;li&gt;&lt;a href=&quot;https://colab.research.google.com/drive/1eWctaZjGP7yAbLQvHNnF765J0RCExTNj?usp=sharing&quot;&gt;کد به همراه توضیحات و خروجی‌ها&lt;/a&gt;&lt;/li&gt;

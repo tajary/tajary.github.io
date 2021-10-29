@@ -80,7 +80,7 @@
 
 <div>
   <div id="table-of-contents">
-	<div style="text-align:center;font-weight:normal;font-size:18px;">فهرست مطالب</div>
+	<div id="topTOC">فهرست مطالب</div>
     <ul id="toc" class="section-nav">
 <li class="toc-entry toc-h1"><a href="#1-معرفی-ابزارها">1. معرفی ابزارها</a></li>
 <li class="toc-entry toc-h1"><a href="#2-خواندن-دادهها">2. خواندن داده‌ها</a></li>
@@ -347,7 +347,7 @@
   </div>
 </div>
 
-        <div style="min-height:500px;height:500px"> </div>
+        <div id="bottomHeightDiv" > </div>
       </section>
       <footer>
 		<!--  
@@ -358,6 +358,50 @@
          با ذکر منبع مجاز است.</p>
       </footer>
     </div>
+<!-- The Modal -->
+<div id="myModal" class="modal">
+
+  <!-- The Close Button -->
+  <span class="close">&times;</span>
+
+  <!-- Modal Content (The Image) -->
+  <img class="modal-content" id="img01">
+
+  <!-- Modal Caption (Image Text) -->
+  <div id="caption"></div>
+</div>    
     <script src="/assets/javascripts/scale.fix.js"></script>
+<script>
+// Get the modal
+var modal = document.getElementById("myModal");
+
+var modalImg = document.getElementById("img01");
+var captionText = document.getElementById("caption");
+
+var imgs = document.getElementsByTagName("img");
+var i;
+for(i=0;i<imgs.length;i++){
+	var img = imgs[i];
+	img.onclick = function(){
+	  modal.style.display = "block";
+	  modalImg.src = this.src;
+	  captionText.innerHTML = this.alt;
+	}
+}
+var span = document.getElementsByClassName("close")[0];
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+  modal.style.display = "none";
+};
+modal.onclick = function() {
+  modal.style.display = "none";
+};
+document.onkeyup =function(e) {
+     if (e.key === "Escape") { // escape key maps to keycode `27`
+       modal.style.display = "none";
+    }
+};
+</script>
   </body>
 </html>
