@@ -3,7 +3,7 @@
   
     
     <url>
-      <loc>/designing-an-mlp-for-binary-classification-in-python.html</loc>
+      <loc>https://tajary.ir/designing-an-mlp-for-binary-classification-in-python.html</loc>
       
         <lastmod>2021-10-29T00:00:00+03:30</lastmod>
       
@@ -18,7 +18,7 @@
   
     
     <url>
-      <loc>/preprocessing-datasets-in-python.html</loc>
+      <loc>https://tajary.ir/preprocessing-datasets-in-python.html</loc>
       
         <lastmod>2021-10-16T00:00:00+03:30</lastmod>
       
@@ -33,10 +33,16 @@
   
   
     
+    
+    
+  
+    
+    
+    
     <url>
-      <loc>/404.html</loc>
+      <loc>https://tajary.ir/</loc>
       
-        <lastmod>2021-10-31T12:51:38+03:30</lastmod>
+        <lastmod>2021-10-31T13:05:07+03:30</lastmod>
       
       
         <changefreq>monthly</changefreq>
@@ -46,12 +52,15 @@
       
     </url>
     
+    
   
     
+    
+    
     <url>
-      <loc>/</loc>
+      <loc>https://tajary.ir/cats/machine-learning.html</loc>
       
-        <lastmod>2021-10-31T12:51:38+03:30</lastmod>
+        <lastmod>2021-10-31T13:05:07+03:30</lastmod>
       
       
         <changefreq>monthly</changefreq>
@@ -61,52 +70,16 @@
       
     </url>
     
-  
-    
-    <url>
-      <loc>/cats/machine-learning.html</loc>
-      
-        <lastmod>2021-10-31T12:51:38+03:30</lastmod>
-      
-      
-        <changefreq>monthly</changefreq>
-      
-      
-        <priority>0.3</priority>
-      
-    </url>
     
   
     
   
     
-    <url>
-      <loc>/assets/main.css</loc>
-      
-        <lastmod>2021-10-31T12:51:38+03:30</lastmod>
-      
-      
-        <changefreq>monthly</changefreq>
-      
-      
-        <priority>0.3</priority>
-      
-    </url>
+    
     
   
     
-    <url>
-      <loc>/feed.xml</loc>
-      
-        <lastmod>2021-10-31T12:51:38+03:30</lastmod>
-      
-      
-        <changefreq>monthly</changefreq>
-      
-      
-        <priority>0.3</priority>
-      
-    </url>
+    
     
   
 </urlset>
