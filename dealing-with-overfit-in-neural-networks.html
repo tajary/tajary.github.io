@@ -1,0 +1,239 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>
+		مواجهه با overfit در شبکه‌های عصبی / 
+		یادداشت‌های
+		علیرضا تجری</title>
+		
+			<meta name="description" content="شبکه عصبی‌ای overfit است که نمودار validation loss آن صعودی شده باشد. به این معنا که شبکه عصبی، داده های یادگیری را به خوبی شناخته است اما بر روی داده های ارزیابی نتیجه خوبی ندارد. در این مقاله به این علت‌ها و نحوه مواجهه به آن‌ها می‌پردازیم.
+" />
+		
+		
+		
+			<meta name="author" content="علیرضا تجری">
+		
+		 
+    <link rel="stylesheet" href="/assets/stylesheets/styles.css">
+    <link rel="stylesheet" href="/assets/stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        
+        <h1 style="font-size:20px">
+			<a href="/" style="color:blue">
+				یادداشت‌ها
+				<br/>
+				<span style="color:black;font-size:12px;">
+			علیرضا تجری
+				</span>
+			</a>
+		</h1>
+		
+		<div style="margin-top:40px">
+			<strong>دسته‌بندی‌ مطالب</strong>:<br/>
+			<a href="/cats/machine-learning.html">یادگیری ماشینی</a><br/>
+			<!--
+			
+			<a href="/404.html"></a><br/>
+			
+			<a href="/"></a><br/>
+			
+			<a href="/cats/machine-learning.html">یادگیری ماشینی</a><br/>
+			
+			<a href="/sitemap.xml"></a><br/>
+			
+			<a href="/assets/main.css"></a><br/>
+			
+			<a href="/feed.xml"></a><br/>
+			
+			-->
+		
+		</div>
+        
+      </header>
+      <section>
+		<div style="background-color: #eeeeee;padding:2px; border:1px solid #ddd; margin-bottom: 20px;">
+<a href="/">صفحه نخست</a> / <span>مواجهه با overfit در شبکه‌های عصبی</span>
+</div>
+<p style="color:gray;text-align:left; font-size:14px">
+ایجاد:
+	جمعه، 14 آبان 1400
+	
+<br/>
+ ویرایش
+
+جمعه، 14 آبان 1400
+	
+	</p>
+<h1 style="text-align:center;margin-bottom:40px">مواجهه با overfit در شبکه‌های عصبی</h1>
+
+<p style="text-align:justify;border:1px solid gray; background-color:#ffffe0;padding: 20px; margin: 40px 0">
+	شبکه عصبی‌ای overfit است که نمودار validation loss آن صعودی شده باشد. به این معنا که شبکه عصبی، داده های یادگیری را به خوبی شناخته است اما بر روی داده های ارزیابی نتیجه خوبی ندارد. در این مقاله به این علت‌ها و نحوه مواجهه به آن‌ها می‌پردازیم.
+
+</p>
+
+<div>
+  <div id="table-of-contents">
+	<div id="topTOC">فهرست مطالب</div>
+    <ul id="toc" class="section-nav">
+<li class="toc-entry toc-h1"><a href="#1-overfit-چیست">1. overfit چیست</a></li>
+<li class="toc-entry toc-h1"><a href="#2-راه-تشخیص-overfit">2. راه تشخیص overfit</a></li>
+<li class="toc-entry toc-h1"><a href="#3-اثر-برطرف-کردن-overfit-بودن-شبکه-چه-چیزی-باید-باشد">3. اثر برطرف کردن overfit بودن شبکه چه چیزی باید باشد؟</a></li>
+<li class="toc-entry toc-h1"><a href="#4-برطرف-کردن-overfit-بودن-شبکه">4. برطرف کردن overfit بودن شبکه</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#41-بر-طرف-کردن-کم-بودن-تعداد-دادهها">4.1. بر طرف کردن کم بودن تعداد داده‌ها</a></li>
+<li class="toc-entry toc-h2"><a href="#42-بر-طرف-کردن-تعداد-epoch-زیاد">4.2. بر طرف کردن تعداد epoch زیاد</a></li>
+<li class="toc-entry toc-h2"><a href="#43-بر-طرف-کردن-بزرگ-بودن-مدل">4.3. بر طرف کردن بزرگ بودن مدل</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#431-کوچک-کردن-مدل-با-کاهش-لایهها-و-تعداد-نرون-لایهها">4.3.1. کوچک کردن مدل با کاهش لایه‌ها و تعداد نرون لایه‌ها</a></li>
+<li class="toc-entry toc-h3"><a href="#432-محدود-کردن-وزنهای-لایهها-weight-regularization">4.3.2. محدود کردن وزن‌های لایه‌ها (weight regularization)</a></li>
+<li class="toc-entry toc-h3"><a href="#433-حذف-برخی-از-خروجیهای-لایهها-با-کمک-dropout">4.3.3. حذف برخی از خروجی‌های لایه‌ها با کمک dropout</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#5-جمعبندی">5. جمع‌بندی</a></li>
+</ul>
+  </div>
+  <div style="clear:both"></div>
+  <div id="markdown-content">
+    <h1 id="1-overfit-چیست">1. overfit چیست</h1>
+<p>در آموزش شبکه‌های عصبی ما به دنبال دو چیز هستیم: ۱) بهینه‌سازی و ۲) عمومیت. منظور از بهینه‌سازی این است که شبکه عصبی باید بتواند داده های train را به خوبی یاد بگیرد و پارامتر‌های مورد نیاز خودش را از آن‌ها استخراج کند. با کمک معیار‌های ارزیابی (مانند loss، accuracy و fscore) ما می‌توانیم ببینیم که آیا شبکه عصبی توانسته داده‌های یادگیری را یاد بگیرد یا خیر. نکته دیگر، عمومیت است. در عمومیت ما به دنبال این هستیم که شبکه عصبی بتواند نتایج خوبی بر روی داده‌هایی داشته باشد که تا به حال ندیده است (داده‌های آزمون).</p>
+
+<p>ممکن است که شبکه عصبی نتواند یادگیری خوبی داشته باشد. یعنی نتایج ارزیابی بر روی داده‌های یادگیری (train) پایین باشد. در این حالت، نتایج بر روی داده های آزمون هم پایین است. به این حالت underfit شدن می‌گوییم.</p>
+
+<p>از طرف دیگر، ممکن است که شبکه یادگیری خوبی بر روی داده های یادگیری داشته باشد، اما عمومیت نداشته باشد. به این معنا که نتایج ارزیابی بر روی داده‌های یادگیری خیلی خوب است اما همین نتایج بر روی داده‌های آزمون خوب نیست. در این می‌گوییم شبکه overfit شده است.</p>
+
+<h1 id="2-راه-تشخیص-overfit">2. راه تشخیص overfit</h1>
+<p>برای تشخیص overfit کافی است که نمودار loss یادگیری (train loss) و loss ارزیابی (validation loss) را بر اساس epoch رسم کنیم. به طور کلی انتظار داریم که نمودار loss یادگیری، نزولی باشد. اگر نمودار loss ارزیابی هم نزولی باشد، یعنی underfit رخ داده است.
+در مقاله
+<a href="/dealing-with-underfit-in-neural-networks.html">موجهه با underfit در شبکه‌های عصبی</a>
+در این رابطه صحبت کردیم. اگر مشکل underfit را حل کنیم، به مشکل جدیدمان (overfit) برمی‌خوریم. در حالت overfit، نمودار validation loss پس از رسیدن به یک نقطه کمینه، به صورت صعودی ادامه می‌یابد. نمونه نموداری که در آن overfit رخ داده است در شکل زیر نشان داده شده است. همانطور که می‌بینیم، نمودار train loss به صورت نزولی است ولی نمودار validation loss پس از رسیدن به یک مقدار کمینه در epoch نشان داده شده، به صورت صعودی راه خود را ادامه می‌دهد.</p>
+
+<figure class="image">
+  <!--<a href="/assets/posts/dealing-with-overfit-in-neural-networks/loss.png"><img src="/assets/posts/dealing-with-overfit-in-neural-networks/loss.png" alt="وجود underfit در شبکه بر اساس نمودار loss"></a>-->
+  <img src="/assets/posts/dealing-with-overfit-in-neural-networks/loss.png" alt="وجود underfit در شبکه بر اساس نمودار loss" />
+  <figcaption>وجود underfit در شبکه بر اساس نمودار loss</figcaption>
+</figure>
+
+<p>توجه داشته باشید که هدف ما از یادگیری این است که وزن‌های شبکه عصبی را به گونه‌ای تنظیم کنیم که میزان loss کاهش پیدا کند. با اینکار میزان معیار مطلوب ما (مثلا accuracy و یا fscore) افزایش پیدا می‌کند. از ظرف دیگر، برای بررسی دقیق مدل شبکه عصبی، باید آن را بر روی داده‌های آزمون بررسی کنیم. معمولا نتیجه شبکه بر روی داده های آزمون، در حد نتیجه داده‌های validation است.</p>
+
+<h1 id="3-اثر-برطرف-کردن-overfit-بودن-شبکه-چه-چیزی-باید-باشد">3. اثر برطرف کردن overfit بودن شبکه چه چیزی باید باشد؟</h1>
+<p>در ادامه روش‌هایی برای برطرف کردن شبکه ارائه می‌شود. سوال این است که چگونه بفهمیم روش ارائه شده موثر بوده است؟ و یا اینکه اثر برطرف کردن overfit بودن شبکه چیست؟ 
+پاسخ صحیح این است که شما باید نتیجه یک روش را بر روی داده‌های آزمون (test) بررسی کنید. اما در برخی موارد می‌توانیم از نمودار validation loss هم استفاده کنیم. در صورتی یک روش برطرف کردن overfit موثر است که کمترین مقدار loss در این نمودار، کاهش پیدا کرده باشد.</p>
+
+<h1 id="4-برطرف-کردن-overfit-بودن-شبکه">4. برطرف کردن overfit بودن شبکه</h1>
+<p>به طور کلی overfit بودن، به سه علت رخ می‌دهد: ۱) کم بودن داده‌ها، ۲) یادگیری با تعداد epoch زیاد و ۳) بزرگ بودن مدل. با توجه به این سه علت، برای برطرف کردن overfit باید این سه علت را برطرف کنیم.</p>
+
+<h2 id="41-بر-طرف-کردن-کم-بودن-تعداد-دادهها">4.1. بر طرف کردن کم بودن تعداد داده‌ها</h2>
+<p>برای برطرف کردن کم بودن تعداد داده‌ها، باید تعداد داده ها را افزایش بدهیم. در اکثر موارد این کار امکان پذیر نیست. اما در برخی موارد، امکان ساخت داده جدید بر اساس داده‌های موجود وجود دارد. مثلا معمولا ورودی شبکه‌های عصبی کانولوشن، تصویر است. یک از راه های ساخت تصویر جدید، اعمال تغییرات جزئی در تصاویر قبلی است. جابه جایی و چرخاندن تصویر نمونه‌ای از این تغییرات است.</p>
+
+<h2 id="42-بر-طرف-کردن-تعداد-epoch-زیاد">4.2. بر طرف کردن تعداد epoch زیاد</h2>
+<p>برای برطرف کردن یادگیری با epoch زیاد، کافی است که تعداد epoch ها را کاهش بدهیم. اما توجه داریم که با کاهش epochها ممکن است دچار underfit بشویم. میزان epoch مورد نیاز که دچار underfit و overfit نشویم، از روی نمودار validation loss به دست می‌آید. در این نمودار، میزان epoch بهینه جایی است که کمترین مقدار loss را برای validation loss داریم. به این روش توقف زودهنگام (Early Stepping) گفته می‌شود.</p>
+
+<h2 id="43-بر-طرف-کردن-بزرگ-بودن-مدل">4.3. بر طرف کردن بزرگ بودن مدل</h2>
+<p>بزرگ بودن مدل به معنای زیاد بودن پارامتر‌های یادگیری است. برای این‌کار شما باید پارامتر‌های یادگیری شبکه را محدود کنید و یا کاهش بدهید. پارامتر‌های یادگیری در شبکه‌های عصبی، تعداد و نوع لایه‌ها و تعداد نرون در هر لایه است. علاوه بر آن در هر لایه، یک سری وزن یاد گرفته می‌شود. برای برطرف کردن بزرگ بودن مدل، سه روش وجود دارد: ۱) کوچک کردن مدل با کاهش لایه‌ها و تعداد نرون لایه‌ها، ۲) محدود کردن وزن‌های لایه‌ها (weight regularization)، و ۳) حذف برخی از خروجی‌های لایه‌ها با کمک dropout.</p>
+
+<h3 id="431-کوچک-کردن-مدل-با-کاهش-لایهها-و-تعداد-نرون-لایهها">4.3.1. کوچک کردن مدل با کاهش لایه‌ها و تعداد نرون لایه‌ها</h3>
+<p>در این روش، شما باید تعداد لایه‌ها و یا تعداد نرون‌های لایه‌ها را کم کنید. اینکار را به صورت تدریجی انجام بدهید و با هر تغییری که می‌دهید، اثر روش را بررسی کنید. این‌کار را تا جایی انجام بدهید که روش موثر است. البته دقت کنید که کوچک کردن مدل منجر به underfit نشود.</p>
+
+<h3 id="432-محدود-کردن-وزنهای-لایهها-weight-regularization">4.3.2. محدود کردن وزن‌های لایه‌ها (weight regularization)</h3>
+<p>در روش محدود کردن وزن لایه‌ها، یک مقدار جدید به تابع loss افزوده می شود که در نهایت منجر به محدود شدن مقدار وزن‌های شبکه می‌شود. توجه داشته باشید که در نتیجه اینکار، مقدار loss در نمودار validation loss افزایش می‌یابد. اما در نهایت، مقدار loss بر روی داده‌های آزمون کاهش می‌یابد. برای ارزیابی این روش، باید اثر آن را بر روی داده‌های آزمون ببینید.</p>
+
+<p>محدود کردن وزن‌ها به سه روش انجام می‌شود: ۱) روش L1 regularization و ۲) روش L2 regularization و ۳) روش ترکیبی L1 و L2. 
+روش L2 regularization با نام weight decay نیز معروف است.</p>
+
+<p>نحوه استفاده از هر کدام از این روش‌ها در لایه‌های یک شبکه در قطعه کد زیر نشان داده شده است:</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">keras</span> <span class="kn">import</span> <span class="n">regularizers</span>
+
+<span class="n">model</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">layers</span><span class="p">.</span><span class="n">Dense</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="n">kernel_regularizer</span><span class="o">=</span><span class="n">regularizers</span><span class="p">.</span><span class="n">l1</span><span class="p">(</span><span class="mf">0.001</span><span class="p">),</span> <span class="n">activation</span><span class="o">=</span><span class="s">'relu'</span><span class="p">))</span>
+
+<span class="n">model</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">layers</span><span class="p">.</span><span class="n">Dense</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="n">kernel_regularizer</span><span class="o">=</span><span class="n">regularizers</span><span class="p">.</span><span class="n">l2</span><span class="p">(</span><span class="mf">0.001</span><span class="p">),</span> <span class="n">activation</span><span class="o">=</span><span class="s">'relu'</span><span class="p">))</span>
+
+<span class="n">model</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">layers</span><span class="p">.</span><span class="n">Dense</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="n">kernel_regularizer</span><span class="o">=</span><span class="n">regularizers</span><span class="p">.</span><span class="n">l1_l2</span><span class="p">(</span><span class="n">l1</span><span class="o">=</span><span class="mf">0.001</span><span class="p">,</span> <span class="n">l2</span><span class="o">=</span><span class="mf">0.001</span><span class="p">),</span> <span class="n">activation</span><span class="o">=</span><span class="s">'relu'</span><span class="p">))</span></code></pre></figure>
+
+<h3 id="433-حذف-برخی-از-خروجیهای-لایهها-با-کمک-dropout">4.3.3. حذف برخی از خروجی‌های لایه‌ها با کمک dropout</h3>
+<p>در این روش، برخی از خروجی‌های یک لایه صفر می‌شود که در نتیجه، تعداد وزن‌های یادگیری شبکه کاهش می‌یابد. برای استفاده از این روش، باید لایه Dropout را بعد از لایه‌های معمولی (مثلا لایه Dense) استفاده کنیم. ورودی این لایه، نسبت تعداد خروجی‌هایی است که باید صفر بشوند. دقت کنید که لایه  Dense را بعد از آخرین لایه شبکه نباید استفاده کرد.</p>
+
+<p>برای ارزیابی این روش می‌توانیم از نمودار validation loss استفاده کنیم.</p>
+
+<p>نحوه استفاده از این روش، در کد زیر نشان داده شده است:</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">keras.layers</span> <span class="kn">import</span> <span class="n">Dropout</span>
+
+<span class="n">model</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">layers</span><span class="p">.</span><span class="n">Dense</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s">'relu'</span><span class="p">))</span>
+<span class="n">model</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">layers</span><span class="p">.</span><span class="n">Dropout</span><span class="p">(</span><span class="mf">0.5</span><span class="p">))</span></code></pre></figure>
+
+<h1 id="5-جمعبندی">5. جمع‌بندی</h1>
+<p>وجود overfit یکی از مشکلات اصلی شبکه‌های عصبی است. در این مقاله روش‌های مواججه با overfit را توضیح دادیم.</p>
+
+  </div>
+</div>
+
+        <div id="bottomHeightDiv" > </div>
+      </section>
+      <footer>
+		<!--  
+        <p><a href="https://www.aparat.com/alirezatajary">آپارات</a> / <a href="https://t.me/alireza_tajary">تلگرام</a> /  <a href="https://www.youtube.com/channel/UCIjstabhHSSnbUoEe4m2MsA">یوتیوب</a></p>
+        -->
+        <p style="font-size:12px">استفاده از مطالب سایت،
+        <br/>
+         با ذکر منبع مجاز است.</p>
+      </footer>
+    </div>
+<!-- The Modal -->
+<div id="myModal" class="modal">
+
+  <!-- The Close Button -->
+  <span class="close">&times;</span>
+
+  <!-- Modal Content (The Image) -->
+  <img class="modal-content" id="img01">
+
+  <!-- Modal Caption (Image Text) -->
+  <div id="caption"></div>
+</div>    
+    <script src="/assets/javascripts/scale.fix.js"></script>
+<script>
+// Get the modal
+var modal = document.getElementById("myModal");
+
+var modalImg = document.getElementById("img01");
+var captionText = document.getElementById("caption");
+
+var imgs = document.getElementsByTagName("img");
+var i;
+for(i=0;i<imgs.length;i++){
+	var img = imgs[i];
+	img.onclick = function(){
+	  modal.style.display = "block";
+	  modalImg.src = this.src;
+	  captionText.innerHTML = this.alt;
+	}
+}
+var span = document.getElementsByClassName("close")[0];
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+  modal.style.display = "none";
+};
+modal.onclick = function() {
+  modal.style.display = "none";
+};
+document.onkeyup =function(e) {
+     if (e.key === "Escape") { // escape key maps to keycode `27`
+       modal.style.display = "none";
+    }
+};
+</script>
+  </body>
+</html>

@@ -1,0 +1,194 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>
+		مواجهه با underfit در شبکه‌های عصبی / 
+		یادداشت‌های
+		علیرضا تجری</title>
+		
+			<meta name="description" content="یک شبکه عصبی underfit است وقتی که هنوز نتوانسته به خوبی داده‌ها را یاد بگیرید. این پدیده به چند علت ممکن است رخ داده باشد. در این مقاله به این علت‌ها و نحوه مواجهه به آن‌ها می‌پردازیم.
+" />
+		
+		
+		
+			<meta name="author" content="علیرضا تجری">
+		
+		 
+    <link rel="stylesheet" href="/assets/stylesheets/styles.css">
+    <link rel="stylesheet" href="/assets/stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        
+        <h1 style="font-size:20px">
+			<a href="/" style="color:blue">
+				یادداشت‌ها
+				<br/>
+				<span style="color:black;font-size:12px;">
+			علیرضا تجری
+				</span>
+			</a>
+		</h1>
+		
+		<div style="margin-top:40px">
+			<strong>دسته‌بندی‌ مطالب</strong>:<br/>
+			<a href="/cats/machine-learning.html">یادگیری ماشینی</a><br/>
+			<!--
+			
+			<a href="/404.html"></a><br/>
+			
+			<a href="/"></a><br/>
+			
+			<a href="/cats/machine-learning.html">یادگیری ماشینی</a><br/>
+			
+			<a href="/sitemap.xml"></a><br/>
+			
+			<a href="/assets/main.css"></a><br/>
+			
+			<a href="/feed.xml"></a><br/>
+			
+			-->
+		
+		</div>
+        
+      </header>
+      <section>
+		<div style="background-color: #eeeeee;padding:2px; border:1px solid #ddd; margin-bottom: 20px;">
+<a href="/">صفحه نخست</a> / <span>مواجهه با underfit در شبکه‌های عصبی</span>
+</div>
+<p style="color:gray;text-align:left; font-size:14px">
+ایجاد:
+	پنج‌شنبه، 13 آبان 1400
+	
+<br/>
+ ویرایش
+
+جمعه، 14 آبان 1400
+	
+	</p>
+<h1 style="text-align:center;margin-bottom:40px">مواجهه با underfit در شبکه‌های عصبی</h1>
+
+<p style="text-align:justify;border:1px solid gray; background-color:#ffffe0;padding: 20px; margin: 40px 0">
+	یک شبکه عصبی underfit است وقتی که هنوز نتوانسته به خوبی داده‌ها را یاد بگیرید. این پدیده به چند علت ممکن است رخ داده باشد. در این مقاله به این علت‌ها و نحوه مواجهه به آن‌ها می‌پردازیم.
+
+</p>
+
+<div>
+  <div id="table-of-contents">
+	<div id="topTOC">فهرست مطالب</div>
+    <ul id="toc" class="section-nav">
+<li class="toc-entry toc-h1"><a href="#1-underfit-چیست">1. underfit چیست</a></li>
+<li class="toc-entry toc-h1"><a href="#2-راه-تشخیص-underfit">2. راه تشخیص underfit</a></li>
+<li class="toc-entry toc-h1"><a href="#3-برطرف-کردن-underfit-بودن-شبکه">3. برطرف کردن underfit بودن شبکه</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#31-بر-طرف-کردن-کم-بودن-تعداد-ویژگیها">3.1. بر طرف کردن کم بودن تعداد ویژگی‌ها</a></li>
+<li class="toc-entry toc-h2"><a href="#32-بر-طرف-کردن-تعداد-epoch-کم">3.2. بر طرف کردن تعداد epoch کم</a></li>
+<li class="toc-entry toc-h2"><a href="#33-بر-طرف-کردن-کوچک-بودن-مدل">3.3. بر طرف کردن کوچک بودن مدل</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#4-جمعبندی">4. جمع‌بندی</a></li>
+</ul>
+  </div>
+  <div style="clear:both"></div>
+  <div id="markdown-content">
+    <h1 id="1-underfit-چیست">1. underfit چیست</h1>
+<p>در آموزش شبکه‌های عصبی ما به دنبال دو چیز هستیم: ۱) بهینه‌سازی و ۲) عمومیت. منظور از بهینه‌سازی این است که شبکه عصبی باید بتواند داده های train را به خوبی یاد بگیرد و پارامتر‌های مورد نیاز خودش را از آن‌ها استخراج کند. با کمک معیار‌های ارزیابی (مانند loss، accuracy و fscore) ما می‌توانیم ببینیم که آیا شبکه عصبی توانسته داده‌های یادگیری را یاد بگیرد یا خیر. نکته دیگر، عمومیت است. در عمومیت ما به دنبال این هستیم که شبکه عصبی بتواند نتایج خوبی بر روی داده‌هایی داشته باشد که تا به حال ندیده است (داده‌های آزمون).</p>
+
+<p>ممکن است که شبکه عصبی نتواند یادگیری خوبی داشته باشد. یعنی نتایج ارزیابی بر روی داده‌های یادگیری (train) پایین باشد. در این حالت، نتایج بر روی داده های آزمون هم پایین است. به این حالت underfit شدن می‌گوییم.</p>
+
+<p>از طرف دیگر، ممکن است که شبکه یادگیری خوبی بر روی داده های یادگیری داشته باشد، اما عمومیت نداشته باشد. به این معنا که نتایج ارزیابی بر روی داده‌های یادگیری خیلی خوب است اما همین نتایج بر روی داده‌های آزمون خوب نیست. در این می‌گوییم شبکه overfit شده است.</p>
+
+<h1 id="2-راه-تشخیص-underfit">2. راه تشخیص underfit</h1>
+<p>برای تشخیص underfit، کافی است که نمودار loss یادگیری (train loss) و loss ارزیابی (validation loss) را بر اساس epoch رسم کنیم. به طور کلی انتظار داریم که نمودار loss یادگیری، نزولی باشد. اگر نمودار loss ارزیابی هم نزولی باشد، یعنی underfit رخ داده است. نمونه نموداری که در آن underfit رخ داده است در شکل زیر نشان داده شده است. همانطور که می‌بینیم، هر دو نمودار loss، نزولی هستند.</p>
+
+<figure class="image">
+  <!--<a href="/assets/posts/dealing-with-underfit-in-neural-networks/loss.png"><img src="/assets/posts/dealing-with-underfit-in-neural-networks/loss.png" alt="وجود underfit در شبکه بر اساس نمودار loss"></a>-->
+  <img src="/assets/posts/dealing-with-underfit-in-neural-networks/loss.png" alt="وجود underfit در شبکه بر اساس نمودار loss" />
+  <figcaption>وجود underfit در شبکه بر اساس نمودار loss</figcaption>
+</figure>
+
+<p>نمودار train loss نشان دهنده بهینه‌سازی (optimization) و نمودار validation loss نشان دهنده خطای عمومیت (generalixation error) است. هرچه validation loss کمتر باشد، خطای عمومیت کمتر است و به عبارت دیگر، میزان عمومیت بیشتر است.</p>
+
+<h1 id="3-برطرف-کردن-underfit-بودن-شبکه">3. برطرف کردن underfit بودن شبکه</h1>
+<p>به طور کلی underfit بودن، به سه علت رخ می‌دهد: ۱) کم بودن تعداد ویژگی داده‌ها، ۲) یادگیری با تعداد epoch کم و ۳) کوچک بودن مدل. با توجه به این سه علت، برای برطرف کردن underfit باید این سه علت را برطرف کنیم.</p>
+
+<h2 id="31-بر-طرف-کردن-کم-بودن-تعداد-ویژگیها">3.1. بر طرف کردن کم بودن تعداد ویژگی‌ها</h2>
+<p>برای برطرف کردن کم بودن ویژگی داده‌ها، باید ویژگی داده ها را افزایش بدهیم. در اکثر موارد این کار امکان پذیر نیست. اما در برخی موارد، امکان ساخت ویژگی جدید بر اساس داده‌های موجود وجود دارد. مثلا یکی از راه‌های ساخت ویژگی جدید، تقسیم دو ویژگی بر روی هم است. مثلا اگر یکی ویژگی‌های شما تعداد متغیر‌ها و ویژگی دیگر شما تعداد خط است، با تقسیم تعداد متغیر‌ها بر تعداد خط، ویژگی جدیدی ایجاد می‌شود که معنا دار هم هست. به طور کلی، این روش ها در موضوعی با نام Feature Engineering مطرح می‌شود.</p>
+
+<h2 id="32-بر-طرف-کردن-تعداد-epoch-کم">3.2. بر طرف کردن تعداد epoch کم</h2>
+<p>برای برطرف کردن یادگیری با epoch کم، کافی است که تعداد epoch ها را افزایش بدهیم. این‌کار را تا زمانی ادامه می‌دهیم که نمودار loss ارزیابی، نزولی باشد.</p>
+
+<h2 id="33-بر-طرف-کردن-کوچک-بودن-مدل">3.3. بر طرف کردن کوچک بودن مدل</h2>
+<p>کوچک بودن مدل به معنای کم بودن پارامتر‌های یادگیری است. برای این‌کار شما باید پارامتر‌های یادگیری شبکه را افزایش بدهید. پارامتر‌های یادگیری در شبکه‌های عصبی، تعداد و نوع لایه‌ها و تعداد نرون در هر لایه است. بنابراین، کافی است که شما لایه‌های جدید به شبکه اضافه کنید و یا اینکه تعداد نرون‌های لایه‌های موجود را افزایش بدهید.</p>
+
+<h1 id="4-جمعبندی">4. جمع‌بندی</h1>
+<p>وجود underfit اولین مشکلی است که ممکن است شما با آن برخورد کنید. هر چند برطرف کردن underfit نسبتا راحت است، اما دانستن علت آن، به درک بهتر شبکه عصبی کمک می‌کند. در این مقاله، به علت وجود این پدیدیه و نحوه مواجهه با آن پرداختیم. در مقاله بعد انشالله به نحوه مواجهه با overfit در شبکه‌های عصبی می‌پردازیم.</p>
+
+  </div>
+</div>
+
+        <div id="bottomHeightDiv" > </div>
+      </section>
+      <footer>
+		<!--  
+        <p><a href="https://www.aparat.com/alirezatajary">آپارات</a> / <a href="https://t.me/alireza_tajary">تلگرام</a> /  <a href="https://www.youtube.com/channel/UCIjstabhHSSnbUoEe4m2MsA">یوتیوب</a></p>
+        -->
+        <p style="font-size:12px">استفاده از مطالب سایت،
+        <br/>
+         با ذکر منبع مجاز است.</p>
+      </footer>
+    </div>
+<!-- The Modal -->
+<div id="myModal" class="modal">
+
+  <!-- The Close Button -->
+  <span class="close">&times;</span>
+
+  <!-- Modal Content (The Image) -->
+  <img class="modal-content" id="img01">
+
+  <!-- Modal Caption (Image Text) -->
+  <div id="caption"></div>
+</div>    
+    <script src="/assets/javascripts/scale.fix.js"></script>
+<script>
+// Get the modal
+var modal = document.getElementById("myModal");
+
+var modalImg = document.getElementById("img01");
+var captionText = document.getElementById("caption");
+
+var imgs = document.getElementsByTagName("img");
+var i;
+for(i=0;i<imgs.length;i++){
+	var img = imgs[i];
+	img.onclick = function(){
+	  modal.style.display = "block";
+	  modalImg.src = this.src;
+	  captionText.innerHTML = this.alt;
+	}
+}
+var span = document.getElementsByClassName("close")[0];
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+  modal.style.display = "none";
+};
+modal.onclick = function() {
+  modal.style.display = "none";
+};
+document.onkeyup =function(e) {
+     if (e.key === "Escape") { // escape key maps to keycode `27`
+       modal.style.display = "none";
+    }
+};
+</script>
+  </body>
+</html>

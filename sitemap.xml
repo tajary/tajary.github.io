@@ -3,7 +3,37 @@
   
     
     <url>
-      <loc>http://tajary.ir/designing-an-mlp-for-binary-classification-in-python.html</loc>
+      <loc>http://tajary.ir/dealing-with-overfit-in-neural-networks.html</loc>
+      
+        <lastmod>2021-11-05T00:00:00+03:30</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>http://tajary.ir/dealing-with-underfit-in-neural-networks.html</loc>
+      
+        <lastmod>2021-11-04T00:00:00+03:30</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>http://tajary.ir/dealing-with-underfit-in-neural-networks.html</loc>
       
         <lastmod>2021-10-29T00:00:00+03:30</lastmod>
       
@@ -42,7 +72,7 @@
     <url>
       <loc>http://tajary.ir/</loc>
       
-        <lastmod>2021-10-31T13:08:04+03:30</lastmod>
+        <lastmod>2021-11-05T19:58:08+03:30</lastmod>
       
       
         <changefreq>monthly</changefreq>
@@ -60,7 +90,7 @@
     <url>
       <loc>http://tajary.ir/cats/machine-learning.html</loc>
       
-        <lastmod>2021-10-31T13:08:04+03:30</lastmod>
+        <lastmod>2021-11-05T19:58:08+03:30</lastmod>
       
       
         <changefreq>monthly</changefreq>

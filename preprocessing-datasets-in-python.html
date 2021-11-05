@@ -70,7 +70,7 @@
 <br/>
  ویرایش
 
-جمعه، 30 مهر 1400
+جمعه، 14 آبان 1400
 	
 	</p>
 <h1 style="text-align:center;margin-bottom:40px">پیش‌پردازش داده‌ها با پایتون</h1>
@@ -195,6 +195,12 @@
 <span class="c1"># or
 </span><span class="n">data</span><span class="p">.</span><span class="n">pop</span><span class="p">(</span><span class="s">"col_name"</span><span class="p">)</span></code></pre></figure>
 
+<p>برای به دست آوردن ستون‌های عددی که فقط یک مقدار داده در آن‌ها وجود دارد، از کد زیر می‌توان استفاده کرد:</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">maxMin</span> <span class="o">=</span> <span class="n">data</span><span class="p">.</span><span class="nb">max</span><span class="p">()</span> <span class="o">-</span> <span class="n">data</span><span class="p">.</span><span class="nb">min</span><span class="p">()</span>
+<span class="n">zeroMaxMin</span> <span class="o">=</span> <span class="n">maxMin</span><span class="p">[</span><span class="n">maxMin</span><span class="o">==</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">zeroMaxMin</span></code></pre></figure>
+
 <h2 id="52-مواجهه-با-مقادیر-غیر-موجود-و-نامشخص">5.2. مواجهه با مقادیر غیر موجود و نامشخص</h2>
 
 <p>مقادیر غیر موجود، به صورت <code class="highlighter-rouge">NaN</code> خود را نشان می‌دهند. در مواجهه با این داده‌ها دو اقدام به صورت کلی انجام می‌شود: ۱) حذف داده‌های <code class="highlighter-rouge">NaN</code> و ۲) استفاده و جایگزینی این داده‌ها. حذف داده‌های <code class="highlighter-rouge">NaN</code> در صورتی است که این داده‌ها و یا سطر و ستون این داده‌ها، اطلاعات مفیدی نداشته باشد. برای حذف ستونی که داده <code class="highlighter-rouge">NaN</code> دارد، می‌توانیم از توابع <code class="highlighter-rouge">drop</code> و <code class="highlighter-rouge">pop</code> مثل قبل استفاده کنیم. برای حذف سطری که دارای <code class="highlighter-rouge">NaN</code> است، از dropna استفاده می‌کنیم. در این تابع باید مشخص کنیم که در صورت وجود <code class="highlighter-rouge">NaN</code> در چه ستون‌هایی، آن سطر حذف بشود.</p>
@@ -243,9 +249,10 @@
 <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">minValueOfCol</span> <span class="o">=</span> <span class="n">train_set</span><span class="p">[</span><span class="s">'col'</span><span class="p">].</span><span class="nb">min</span><span class="p">()</span>
 <span class="n">maxValueOfCol</span> <span class="o">=</span> <span class="n">train_set</span><span class="p">[</span><span class="s">'col'</span><span class="p">].</span><span class="nb">max</span><span class="p">()</span>
 
-<span class="n">train_set</span><span class="p">[</span><span class="s">'col'</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">train_set</span><span class="p">[</span><span class="s">'col'</span><span class="p">]</span> <span class="o">-</span> <span class="n">minValueOfCol</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">maxValueOfCol</span><span class="o">-</span><span class="n">minValueOfCol</span><span class="p">)</span>
-
-<span class="n">test_set</span><span class="p">[</span><span class="s">'col'</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">test_set</span><span class="p">[</span><span class="s">'col'</span><span class="p">]</span> <span class="o">-</span> <span class="n">minValueOfCol</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">maxValueOfCol</span><span class="o">-</span><span class="n">minValueOfCol</span><span class="p">)</span></code></pre></figure>
+<span class="c1">#train_set['col'] = (train_set['col'] - minValueOfCol) / (maxValueOfCol-minValueOfCol)
+</span><span class="n">train_set</span><span class="p">.</span><span class="n">loc</span><span class="p">[:,</span><span class="s">'col'</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">train_set</span><span class="p">[</span><span class="s">'col'</span><span class="p">]</span> <span class="o">-</span> <span class="n">minValueOfCol</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">maxValueOfCol</span><span class="o">-</span><span class="n">minValueOfCol</span><span class="p">)</span>
+<span class="c1">#test_set['col'] = (test_set['col'] - minValueOfCol) / (maxValueOfCol-minValueOfCol)
+</span><span class="n">test_set</span><span class="p">.</span><span class="n">loc</span><span class="p">[:,</span><span class="s">'col'</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">test_set</span><span class="p">[</span><span class="s">'col'</span><span class="p">]</span> <span class="o">-</span> <span class="n">minValueOfCol</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">maxValueOfCol</span><span class="o">-</span><span class="n">minValueOfCol</span><span class="p">)</span></code></pre></figure>
 
 <h1 id="7-پردازش-ستونهای-عددی">7. پردازش ستون‌های عددی</h1>
 
@@ -275,9 +282,10 @@
 <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">minValueOfCol</span> <span class="o">=</span> <span class="n">train_set</span><span class="p">[</span><span class="s">'col'</span><span class="p">].</span><span class="nb">min</span><span class="p">()</span>
 <span class="n">maxValueOfCol</span> <span class="o">=</span> <span class="n">train_set</span><span class="p">[</span><span class="s">'col'</span><span class="p">].</span><span class="nb">max</span><span class="p">()</span>
 
-<span class="n">train_set</span><span class="p">[</span><span class="s">'col'</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">train_set</span><span class="p">[</span><span class="s">'col'</span><span class="p">]</span> <span class="o">-</span> <span class="n">minValueOfCol</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">maxValueOfCol</span><span class="o">-</span><span class="n">minValueOfCol</span><span class="p">)</span>
-
-<span class="n">test_set</span><span class="p">[</span><span class="s">'col'</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">test_set</span><span class="p">[</span><span class="s">'col'</span><span class="p">]</span> <span class="o">-</span> <span class="n">minValueOfCol</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">maxValueOfCol</span><span class="o">-</span><span class="n">minValueOfCol</span><span class="p">)</span></code></pre></figure>
+<span class="c1">#train_set['col'] = (train_set['col'] - minValueOfCol) / (maxValueOfCol-minValueOfCol)
+</span><span class="n">train_set</span><span class="p">.</span><span class="n">loc</span><span class="p">[:,</span><span class="s">'col'</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">train_set</span><span class="p">[</span><span class="s">'col'</span><span class="p">]</span> <span class="o">-</span> <span class="n">minValueOfCol</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">maxValueOfCol</span><span class="o">-</span><span class="n">minValueOfCol</span><span class="p">)</span>
+<span class="c1">#test_set['col'] = (test_set['col'] - minValueOfCol) / (maxValueOfCol-minValueOfCol)
+</span><span class="n">test_set</span><span class="p">.</span><span class="n">loc</span><span class="p">[:,</span><span class="s">'col'</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">test_set</span><span class="p">[</span><span class="s">'col'</span><span class="p">]</span> <span class="o">-</span> <span class="n">minValueOfCol</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">maxValueOfCol</span><span class="o">-</span><span class="n">minValueOfCol</span><span class="p">)</span></code></pre></figure>
 
 <h2 id="73-استاندارد-سازی">7.3. استاندارد سازی</h2>
 
@@ -286,9 +294,11 @@
 <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">meanValueOfCol</span> <span class="o">=</span> <span class="n">train_set</span><span class="p">[</span><span class="s">'col'</span><span class="p">].</span><span class="n">mean</span><span class="p">()</span>
 <span class="n">stdValueOfCol</span> <span class="o">=</span> <span class="n">train_set</span><span class="p">[</span><span class="s">'col'</span><span class="p">].</span><span class="n">std</span><span class="p">()</span>
 
-<span class="n">train_set</span><span class="p">[</span><span class="s">'col'</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">train_set</span><span class="p">[</span><span class="s">'col'</span><span class="p">]</span> <span class="o">-</span> <span class="n">meanValueOfCol</span><span class="p">)</span> <span class="o">/</span> <span class="n">stdValueOfCol</span>
+<span class="c1">#train_set['col'] = (train_set['col'] - meanValueOfCol) / stdValueOfCol
+</span><span class="n">train_set</span><span class="p">.</span><span class="n">loc</span><span class="p">[:,</span><span class="s">'col'</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">train_set</span><span class="p">[</span><span class="s">'col'</span><span class="p">]</span> <span class="o">-</span> <span class="n">meanValueOfCol</span><span class="p">)</span> <span class="o">/</span> <span class="n">stdValueOfCol</span>
 
-<span class="n">test_set</span><span class="p">[</span><span class="s">'col'</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">test_set</span><span class="p">[</span><span class="s">'col'</span><span class="p">]</span> <span class="o">-</span> <span class="n">meanValueOfCol</span><span class="p">)</span> <span class="o">/</span> <span class="n">stdValueOfCol</span></code></pre></figure>
+<span class="c1">#test_set['col'] = (test_set['col'] - meanValueOfCol) / stdValueOfCol
+</span><span class="n">test_set</span><span class="p">.</span><span class="n">loc</span><span class="p">[:,</span><span class="s">'col'</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">test_set</span><span class="p">[</span><span class="s">'col'</span><span class="p">]</span> <span class="o">-</span> <span class="n">meanValueOfCol</span><span class="p">)</span> <span class="o">/</span> <span class="n">stdValueOfCol</span></code></pre></figure>
 
 <h2 id="74-دادههای-دستهبندی">7.4. داده‌های دسته‌بندی</h2>
 
@@ -304,8 +314,10 @@
   <span class="k">else</span><span class="p">:</span>
     <span class="k">return</span> <span class="mi">0</span>
 
-<span class="n">train_set</span><span class="p">[</span><span class="s">'col'</span><span class="p">]</span> <span class="o">=</span> <span class="n">train_set</span><span class="p">[</span><span class="s">'col'</span><span class="p">].</span><span class="nb">apply</span><span class="p">(</span><span class="n">normalizeV</span><span class="p">)</span>
-<span class="n">test_set</span><span class="p">[</span><span class="s">'col'</span><span class="p">]</span> <span class="o">=</span> <span class="n">test_set</span><span class="p">[</span><span class="s">'col'</span><span class="p">].</span><span class="nb">apply</span><span class="p">(</span><span class="n">normalizeV</span><span class="p">)</span></code></pre></figure>
+<span class="c1">#train_set['col'] = train_set['col'].apply(normalizeV)
+</span><span class="n">train_set</span><span class="p">.</span><span class="n">loc</span><span class="p">[:,</span><span class="s">'col'</span><span class="p">]</span> <span class="o">=</span> <span class="n">train_set</span><span class="p">[</span><span class="s">'col'</span><span class="p">].</span><span class="nb">apply</span><span class="p">(</span><span class="n">normalizeV</span><span class="p">)</span>
+<span class="c1">#test_set['col'] = test_set['col'].apply(normalizeV)
+</span><span class="n">test_set</span><span class="p">.</span><span class="n">loc</span><span class="p">[:,</span><span class="s">'col'</span><span class="p">]</span> <span class="o">=</span> <span class="n">test_set</span><span class="p">[</span><span class="s">'col'</span><span class="p">].</span><span class="nb">apply</span><span class="p">(</span><span class="n">normalizeV</span><span class="p">)</span></code></pre></figure>
 
 <h1 id="8-جدا-سازی-ویژگیها-از-پارامتر-هدف">8. جدا سازی ویژگی‌ها از پارامتر هدف</h1>
 
