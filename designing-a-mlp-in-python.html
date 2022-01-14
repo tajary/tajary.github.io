@@ -1,0 +1,606 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>
+		ساخت یک شبکه عصبی پرسپترون چند لایه برای دسته‌بندی دوتایی در پایتون / 
+		یادداشت‌های
+		علیرضا تجری</title>
+		
+			<meta name="description" content="پرسپترون چند لایه، ساده‌ترین شبکه عصبی عمیق است. در این شبکه عصبی، لایه‌های Dense به صورت متوالی در پشت سر هم قرار می‌گیرند، در این مقاله نحوه ساخت و استفاده از یک شبکه عصبی برای دسته بندی دوتایی (Binary Classification) توضیح داده می‌شود.
+" />
+		
+		
+		
+			<meta name="author" content="علیرضا تجری">
+		
+		 
+    <link rel="stylesheet" href="/assets/stylesheets/styles.css">
+    <link rel="stylesheet" href="/assets/stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        
+        <h1 style="font-size:20px">
+			<a href="/" style="color:blue">
+				یادداشت‌ها
+				<br/>
+				<span style="color:black;font-size:12px;">
+			علیرضا تجری
+				</span>
+			</a>
+		</h1>
+		
+		<div style="margin-top:40px">
+			<strong>دسته‌بندی‌ مطالب</strong>:<br/>
+			<a href="/cats/machine-learning.html">یادگیری ماشینی</a><br/>
+			<!--
+			
+			<a href="/404.html"></a><br/>
+			
+			<a href="/"></a><br/>
+			
+			<a href="/cats/machine-learning.html">یادگیری ماشینی</a><br/>
+			
+			<a href="/sitemap.xml"></a><br/>
+			
+			<a href="/assets/main.css"></a><br/>
+			
+			<a href="/feed.xml"></a><br/>
+			
+			-->
+		
+		</div>
+        
+      </header>
+      <section>
+		<div style="background-color: #eeeeee;padding:2px; border:1px solid #ddd; margin-bottom: 20px;">
+<a href="/">صفحه نخست</a> / <span>ساخت یک شبکه عصبی پرسپترون چند لایه برای دسته‌بندی دوتایی در پایتون</span>
+</div>
+<p style="color:gray;text-align:left; font-size:14px">
+ایجاد:
+	جمعه، 07 آبان 1400
+	
+<br/>
+ ویرایش
+
+جمعه، 07 آبان 1400
+	
+	</p>
+<h1 style="text-align:center;margin-bottom:40px">ساخت یک شبکه عصبی پرسپترون چند لایه برای دسته‌بندی دوتایی در پایتون</h1>
+
+<p style="text-align:justify;border:1px solid gray; background-color:#ffffe0;padding: 20px; margin: 40px 0">
+	پرسپترون چند لایه، ساده‌ترین شبکه عصبی عمیق است. در این شبکه عصبی، لایه‌های Dense به صورت متوالی در پشت سر هم قرار می‌گیرند، در این مقاله نحوه ساخت و استفاده از یک شبکه عصبی برای دسته بندی دوتایی (Binary Classification) توضیح داده می‌شود.
+
+</p>
+
+<div>
+  <div id="table-of-contents">
+	<div id="topTOC">فهرست مطالب</div>
+    <ul id="toc" class="section-nav">
+<li class="toc-entry toc-h1"><a href="#1-گام-اول-خواندن-دادهها">1. گام اول: خواندن داده‌ها</a></li>
+<li class="toc-entry toc-h1"><a href="#2-گام-دوم-طراحی-لایههای-شبکه-عصبی">2. گام دوم: طراحی لایه‌های شبکه عصبی</a></li>
+<li class="toc-entry toc-h1"><a href="#3-گام-سوم-تعیین-نحوه-آموزش-شبکه-عصبی-و-معیار-ارزیابی">3. گام سوم: تعیین نحوه آموزش شبکه عصبی و معیار ارزیابی</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#31-مشاهده-شبکه-عصبی">3.1. مشاهده شبکه عصبی</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#4-گام-چهارم-آموزش-شبکه">4. گام چهارم: آموزش شبکه</a></li>
+<li class="toc-entry toc-h1"><a href="#5-گام-پنجم-ارزیابی-شبکه-در-حین-آموزش">5. گام پنجم: ارزیابی شبکه در حین آموزش</a></li>
+<li class="toc-entry toc-h1"><a href="#6-گام-ششم-ارزیابی-شبکه-بر-روی-داده-های-آزمون">6. گام ششم: ارزیابی شبکه بر روی داده های آزمون</a></li>
+<li class="toc-entry toc-h1"><a href="#7-جمعبندی">7. جمع‌بندی</a></li>
+</ul>
+  </div>
+  <div style="clear:both"></div>
+  <div id="markdown-content">
+    <p>روش‌های توضیح داده شده در این مقاله بر روی یک مجموعه داده نمونه اعمال شده‌اند. فایل کد و همه فایل‌های استفاده شده از طریق لینک‌ زیر قابل دریافت است.</p>
+
+<ul>
+  <li><a href="https://drive.google.com/drive/folders/1tSGDQ77MdfAb8mUiLSglFyCaydCg8tFN?usp=sharing">پوشه شامل‌ها همه کد‌ها و داده‌ها</a></li>
+</ul>
+
+<h1 id="1-گام-اول-خواندن-دادهها">1. گام اول: خواندن داده‌ها</h1>
+
+<p>قبل از طراحی شبکه، باید داده‌هایی را که می‌خواهیم پردازش کنیم، بخوانیم. برای خواندن داده ها از کتابخانه Pandas استفاده می‌کنیم. در این مقاله داده‌ها به صورت آماده وجود دارند. در صورتی که با نحوه آماده سازی داده ها آشنایی ندارید، می‌توانید مقاله <a href="/preprocessing-datasets-in-python.html">پیش‌پردازش داده‌ها با پایتون</a> را مطالعه کنید.</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="n">pd</span>
+
+<span class="n">basePath</span> <span class="o">=</span> <span class="s">"/content/drive/MyDrive/blog/mlp-binary-classification/"</span>
+
+<span class="n">train_feats</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">basePath</span><span class="o">+</span><span class="s">"train_feats.csv"</span><span class="p">)</span>
+<span class="n">test_feats</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">basePath</span><span class="o">+</span><span class="s">"test_feats.csv"</span><span class="p">)</span>
+
+<span class="n">train_target</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">basePath</span><span class="o">+</span><span class="s">"train_target.csv"</span><span class="p">)</span>
+<span class="n">test_target</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">basePath</span><span class="o">+</span><span class="s">"test_target.csv"</span><span class="p">)</span></code></pre></figure>
+
+<p>برای مشاهده و بررسی داده‌ها می‌توانیم از describe استفاده کنیم. دقت کنید که همه مقادیر مربوط به داده‌های یادگیری بین 0 و 1 هستند. اما در مورد داده های آزمون، ممکن است اینطور نباشد. مثلا کمترین مقدار یک ستون از 0 کمتر باشد و بیشترین مقدار یک ستون از 1 بیشتر باشد. در مورد داده‌های ما، این اتقاق افتاده است.</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">train_feats</span><span class="p">.</span><span class="n">describe</span><span class="p">(</span><span class="n">include</span><span class="o">=</span><span class="s">'all'</span><span class="p">)</span></code></pre></figure>
+
+<div class="dfHolder">
+<table class="dataframe" border="1">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>intercolumnar distance</th>
+      <th>upper margin</th>
+      <th>lower margin</th>
+      <th>exploitation</th>
+      <th>row number</th>
+      <th>modular ratio</th>
+      <th>interlinear spacing</th>
+      <th>weight</th>
+      <th>peak number</th>
+      <th>modular ratio/ interlinear spacing</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>count</th>
+      <td>8344.000000</td>
+      <td>8344.000000</td>
+      <td>8344.000000</td>
+      <td>8344.000000</td>
+      <td>8344.000000</td>
+      <td>8344.000000</td>
+      <td>8344.000000</td>
+      <td>8344.000000</td>
+      <td>8344.000000</td>
+      <td>8344.000000</td>
+    </tr>
+    <tr>
+      <th>mean</th>
+      <td>0.228808</td>
+      <td>0.006362</td>
+      <td>0.060381</td>
+      <td>0.576617</td>
+      <td>0.822838</td>
+      <td>0.123502</td>
+      <td>0.125857</td>
+      <td>0.240800</td>
+      <td>0.110971</td>
+      <td>0.589626</td>
+    </tr>
+    <tr>
+      <th>std</th>
+      <td>0.066259</td>
+      <td>0.011215</td>
+      <td>0.021374</td>
+      <td>0.106865</td>
+      <td>0.164919</td>
+      <td>0.019067</td>
+      <td>0.014573</td>
+      <td>0.058065</td>
+      <td>0.022422</td>
+      <td>0.088562</td>
+    </tr>
+    <tr style="background-color:yellow">
+      <th>min</th>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>25%</th>
+      <td>0.219984</td>
+      <td>0.005579</td>
+      <td>0.061623</td>
+      <td>0.521054</td>
+      <td>0.850746</td>
+      <td>0.113343</td>
+      <td>0.125258</td>
+      <td>0.208556</td>
+      <td>0.103337</td>
+      <td>0.543997</td>
+    </tr>
+    <tr>
+      <th>50%</th>
+      <td>0.231265</td>
+      <td>0.006104</td>
+      <td>0.064430</td>
+      <td>0.586549</td>
+      <td>0.865672</td>
+      <td>0.122273</td>
+      <td>0.128041</td>
+      <td>0.246615</td>
+      <td>0.112159</td>
+      <td>0.586422</td>
+    </tr>
+    <tr>
+      <th>75%</th>
+      <td>0.241741</td>
+      <td>0.006771</td>
+      <td>0.066970</td>
+      <td>0.646610</td>
+      <td>0.865672</td>
+      <td>0.132577</td>
+      <td>0.130427</td>
+      <td>0.278269</td>
+      <td>0.120980</td>
+      <td>0.636167</td>
+    </tr>
+    <tr style="background-color:yellow">
+      <th>max</th>
+      <td>1.000000</td>
+      <td>1.000000</td>
+      <td>1.000000</td>
+      <td>1.000000</td>
+      <td>1.000000</td>
+      <td>1.000000</td>
+      <td>1.000000</td>
+      <td>1.000000</td>
+      <td>1.000000</td>
+      <td>1.000000</td>
+    </tr>
+  </tbody>
+</table>
+
+</div>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">test_feats</span><span class="p">.</span><span class="n">describe</span><span class="p">(</span><span class="n">include</span><span class="o">=</span><span class="s">'all'</span><span class="p">)</span></code></pre></figure>
+
+<div class="dfHolder">
+<table class="dataframe" border="1">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>intercolumnar distance</th>
+      <th>upper margin</th>
+      <th>lower margin</th>
+      <th>exploitation</th>
+      <th>row number</th>
+      <th>modular ratio</th>
+      <th>interlinear spacing</th>
+      <th>weight</th>
+      <th>peak number</th>
+      <th>modular ratio/ interlinear spacing</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>count</th>
+      <td>2086.000000</td>
+      <td>2086.000000</td>
+      <td>2086.000000</td>
+      <td>2086.000000</td>
+      <td>2086.000000</td>
+      <td>2086.000000</td>
+      <td>2086.000000</td>
+      <td>2086.000000</td>
+      <td>2086.000000</td>
+      <td>2086.000000</td>
+    </tr>
+    <tr>
+      <th>mean</th>
+      <td>0.227047</td>
+      <td>0.006223</td>
+      <td>0.060109</td>
+      <td>0.577577</td>
+      <td>0.823801</td>
+      <td>0.123378</td>
+      <td>0.125475</td>
+      <td>0.240850</td>
+      <td>0.111739</td>
+      <td>0.591369</td>
+    </tr>
+    <tr>
+      <th>std</th>
+      <td>0.058152</td>
+      <td>0.002522</td>
+      <td>0.019715</td>
+      <td>0.107459</td>
+      <td>0.168651</td>
+      <td>0.016779</td>
+      <td>0.010388</td>
+      <td>0.057144</td>
+      <td>0.020103</td>
+      <td>0.087831</td>
+    </tr>
+    <tr>
+      <th>min</th>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td style="background-color:yellow">0.059076</td>
+      <td>0.000000</td>
+      <td style="background-color:yellow">-0.004785</td>
+      <td>0.020163</td>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>25%</th>
+      <td>0.219984</td>
+      <td>0.005559</td>
+      <td>0.061490</td>
+      <td>0.521054</td>
+      <td>0.850746</td>
+      <td>0.113343</td>
+      <td>0.125158</td>
+      <td>0.209811</td>
+      <td>0.103967</td>
+      <td>0.547212</td>
+    </tr>
+    <tr>
+      <th>50%</th>
+      <td>0.231265</td>
+      <td>0.006084</td>
+      <td>0.064364</td>
+      <td>0.588473</td>
+      <td>0.865672</td>
+      <td>0.122273</td>
+      <td>0.128041</td>
+      <td>0.246857</td>
+      <td>0.112789</td>
+      <td>0.588782</td>
+    </tr>
+    <tr>
+      <th>75%</th>
+      <td>0.242546</td>
+      <td>0.006771</td>
+      <td>0.066970</td>
+      <td>0.649325</td>
+      <td>0.865672</td>
+      <td>0.132577</td>
+      <td>0.130427</td>
+      <td>0.276956</td>
+      <td>0.121610</td>
+      <td>0.637185</td>
+    </tr>
+    <tr>
+      <th>max</th>
+      <td>1.000000</td>
+      <td style="background-color:yellow">0.056373</td>
+      <td>0.200509</td>
+      <td>1.000000</td>
+      <td>1.000000</td>
+      <td>0.204017</td>
+      <td>0.179735</td>
+      <td>0.470199</td>
+      <td>0.170758</td>
+      <td>0.939281</td>
+    </tr>
+  </tbody>
+</table>
+
+</div>
+
+<p>مقدار هدف (target) برای همه ویژگی‌ها در داده‌های یادگیری و آزمون، یا 0 است و یا 1.</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">train_target</span><span class="p">.</span><span class="n">value_counts</span><span class="p">()</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">Class
+0        4876
+1        3468
+dtype: int64</code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">test_target</span><span class="p">.</span><span class="n">value_counts</span><span class="p">()</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">Class
+0        1268
+1         818
+dtype: int64</code></pre></figure>
+
+<h1 id="2-گام-دوم-طراحی-لایههای-شبکه-عصبی">2. گام دوم: طراحی لایه‌های شبکه عصبی</h1>
+
+<p>ابتدا پکیج‌های مورد نیاز را import می‌کنیم.</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">keras.models</span> <span class="kn">import</span> <span class="n">Sequential</span>
+<span class="kn">from</span> <span class="nn">keras.layers</span> <span class="kn">import</span> <span class="n">Dense</span></code></pre></figure>
+
+<p>برای ایجاد شبکه‌های عصبی پرسپترون چند لایه، از مدل Sequential استفاده می‌کنیم. 
+در این مدل، لایه‌های شبکه عصبی به صورت پشت سر‌هم قرار می‌گیرند. برای این مدل، ۶ لایه در نظر گرفتیم. همه این لایه‌ها از نوع Dense هستند. در لایه‌های Dense، همه ورودی‌های لایه به همه نرون‌ها متصل می‌شوند. اولین پارامتر Dense، تعداد خروجی لایه Dense است. برای اولین لایه Dense، باید تعداد ورودی‌های لایه را هم مشخص کنیم. تعداد ورودی‌های اولین لایه برابر است با تعداد ویژگی‌ها. تعداد ویژگی‌ها هم از طریق <code class="highlighter-rouge">train_feats.shape[1]</code> به دست می‌آید. البته به جای <code class="highlighter-rouge">train_feats.shape[1]</code> می‌توانیم مقدار آن که در این مثال ما برابر با 10 است را بنویسیم. برای لایه‌های بعدی، تعیین تعداد خروجی‌های لایه کافی است. تعداد ورودی‌های لایه‌های بعد، برابر است با تعداد خروجی‌های لایه قبل. برای شبکه‌های عصبی عمیق، معمولا تابع فعالسازی <code class="highlighter-rouge">relu</code> در نظر گرفته می‌شود. برای لایه آخر، با توجه به اینکه مسئله ما دسته بندی دوتایی است، تابع فعال سازی را <code class="highlighter-rouge">sigmoid</code> و تعداد خروجی‌ها را <code class="highlighter-rouge">1</code> در نظر گرفتیم.</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">model</span> <span class="o">=</span> <span class="n">Sequential</span><span class="p">()</span>
+
+<span class="n">model</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">Dense</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s">'relu'</span><span class="p">,</span> <span class="n">input_dim</span><span class="o">=</span><span class="n">train_feats</span><span class="p">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+<span class="n">model</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">Dense</span><span class="p">(</span><span class="mi">80</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s">'relu'</span><span class="p">))</span>
+<span class="n">model</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">Dense</span><span class="p">(</span><span class="mi">40</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s">'relu'</span><span class="p">))</span>
+<span class="n">model</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">Dense</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s">'relu'</span><span class="p">))</span>
+<span class="n">model</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">Dense</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s">'relu'</span><span class="p">))</span>
+<span class="n">model</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">Dense</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s">'sigmoid'</span><span class="p">))</span></code></pre></figure>
+
+<h1 id="3-گام-سوم-تعیین-نحوه-آموزش-شبکه-عصبی-و-معیار-ارزیابی">3. گام سوم: تعیین نحوه آموزش شبکه عصبی و معیار ارزیابی</h1>
+
+<p>برای تعیین نحوه آموزش شبکه عصبی باید دو پارامتر اصلی را تعیین کنیم.</p>
+
+<p>پارامتر اول، تابع <code class="highlighter-rouge">loss</code> است. این تابع مشخص می‌کند که مقدار یادگرفته شده تا چه اندازه با مقدار واقعی اخلاف دارد. هر چه مقدار این تابع کمتر باشد، یادگیری بهتر انجام شده است. برای مسئله ما (دسته‌بندی دو کلاسه) تابع <code class="highlighter-rouge">binary_crossentropy</code>، بهترین گزینه است. برای مسئل دیگر مانند دسته بندی چند کلاسه و یا رگرسیون، توابع <code class="highlighter-rouge">loss</code> 
+دیگری وجود دارد.</p>
+
+<p>پارامتر دوم، تابع بهینه‌ساز و یا optimizer است. این تابع تعیین می‌کند که با توجه به مقدار <code class="highlighter-rouge">loss</code> چگونه، ضرایب وزن‌های شبکه را باید تغییر داد. در این مثال ما از <code class="highlighter-rouge">adam</code> استفاده کردیم. توابع بهینه‌سازی دیگری هم وجود دارد که می‌شد از آن‌ها استفاده کرد.</p>
+
+<p>معیاری که ما برای ارزیابی از آن استفاده می‌کنیم، دقت و یا <code class="highlighter-rouge">accuracy</code> است. در پارامتر <code class="highlighter-rouge">metrics</code> این معیار را مشخص کردیم. می‌توانیم از معیار‌های دیگر هم استفاده کنیم.</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">model</span><span class="p">.</span><span class="nb">compile</span><span class="p">(</span><span class="n">optimizer</span><span class="o">=</span><span class="s">'adam'</span><span class="p">,</span> 
+  <span class="n">loss</span><span class="o">=</span><span class="s">'binary_crossentropy'</span><span class="p">,</span> 
+  <span class="n">metrics</span><span class="o">=</span><span class="p">[</span><span class="s">'accuracy'</span><span class="p">])</span></code></pre></figure>
+
+<h2 id="31-مشاهده-شبکه-عصبی">3.1. مشاهده شبکه عصبی</h2>
+
+<p>یکی از امکانات خوب <code class="highlighter-rouge">keras</code> امکان دیدن مدلی است که طراحی کردیم. با کمک دستور زیر، می‌توانیم مدل را ببینیم.</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">model</span><span class="p">.</span><span class="n">summary</span><span class="p">()</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">Model: "sequential_5"
+_________________________________________________________________
+Layer (type)                 Output Shape              Param #   
+=================================================================
+dense_19 (Dense)             (None, 20)                220       
+_________________________________________________________________
+dense_20 (Dense)             (None, 80)                1680      
+_________________________________________________________________
+dense_21 (Dense)             (None, 40)                3240      
+_________________________________________________________________
+dense_22 (Dense)             (None, 20)                820       
+_________________________________________________________________
+dense_23 (Dense)             (None, 10)                210       
+_________________________________________________________________
+dense_24 (Dense)             (None, 1)                 11        
+=================================================================
+Total params: 6,181
+Trainable params: 6,181
+Non-trainable params: 0</code></pre></figure>
+
+<h1 id="4-گام-چهارم-آموزش-شبکه">4. گام چهارم: آموزش شبکه</h1>
+
+<p>برای آموزش شبکه، از تابع <code class="highlighter-rouge">fit</code> بر روی مدل استفاده می‌کنیم. در این تابع، باید همه داده‌های یادگیری را در قالب بردار ویژگی‌ها و بردار هدف تعیین کنیم. در این مثال توجه داشته باشید که مقدار هدف در ستونی با نام <code class="highlighter-rouge">Class</code> در <code class="highlighter-rouge">train_target</code> قرار دارد. پارامتر <code class="highlighter-rouge">epochs</code> تعیین می‌کند که چند بار باید کل داده‌های یادگیری را به شبکه بدهیم. پارامتر <code class="highlighter-rouge">batch_size</code> تعین می‌کند که داده‌ها را چند تا چند تا به شبکه بدهیم. در این مثال ما داده‌ها را ۵۱۲ نمونه (=سطر)، ۵۱۲ نمونه، به شبکه می‌دهیم. پارمتر <code class="highlighter-rouge">validation_split</code> برای جدا کردن بخشی از داده های یادگیری برای ارزیابی است. در هر مرحله یادگیری بر روی داده های ارزیابی انجام نمی‌شود. از این داده ها برای ارزیابی داخلی استفاده می‌کنیم. ارزیابی اصلی با داده های آزمون است. خروجی تابع <code class="highlighter-rouge">fit</code> یک شی است که داده‌های مفیدی از فرآیند آموزش دارد. در گام بعد ما این داده‌ها را نشان می‌دهیم. با ارزیابی این داده‌ها، می‌توانیم وضعیت یادگیری شبکه را بسنجیم. بیشترین زمان اجرا، مربوط به این تابع است.</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">history</span> <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="n">fit</span><span class="p">(</span>
+    <span class="n">train_feats</span><span class="p">,</span> <span class="n">train_target</span><span class="p">[</span><span class="s">'Class'</span><span class="p">],</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">512</span><span class="p">,</span> 
+    <span class="n">epochs</span><span class="o">=</span><span class="mi">4000</span><span class="p">,</span> <span class="n">validation_split</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span></code></pre></figure>
+
+<p>بخشی از خروجی این تابع به صورت زیر است:</p>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">Epoch 3995/4000
+14/14 [==============================] - 0s 10ms/step - loss: 0.1903 - accuracy: 0.9128 - val_loss: 0.5907 - val_accuracy: 0.8556
+Epoch 3996/4000
+14/14 [==============================] - 0s 9ms/step - loss: 0.1908 - accuracy: 0.9091 - val_loss: 0.5949 - val_accuracy: 0.8616
+Epoch 3997/4000
+14/14 [==============================] - 0s 8ms/step - loss: 0.1856 - accuracy: 0.9139 - val_loss: 0.5940 - val_accuracy: 0.8646
+Epoch 3998/4000
+14/14 [==============================] - 0s 10ms/step - loss: 0.1883 - accuracy: 0.9110 - val_loss: 0.6269 - val_accuracy: 0.8448
+Epoch 3999/4000
+14/14 [==============================] - 0s 11ms/step - loss: 0.2196 - accuracy: 0.8953 - val_loss: 0.5928 - val_accuracy: 0.8652
+Epoch 4000/4000
+14/14 [==============================] - 0s 9ms/step - loss: 0.2018 - accuracy: 0.9041 - val_loss: 0.5811 - val_accuracy: 0.8592</code></pre></figure>
+
+<h1 id="5-گام-پنجم-ارزیابی-شبکه-در-حین-آموزش">5. گام پنجم: ارزیابی شبکه در حین آموزش</h1>
+
+<p>خروجی تابع <code class="highlighter-rouge">fit</code> در کد قبل، متغیر <code class="highlighter-rouge">history</code> است. در این متغیر، اطلاعات مربوط به فرآیند یادگیری وجود دارد. یکی از مهمترین این اطلاعات، مقدار <code class="highlighter-rouge">loss</code> و <code class="highlighter-rouge">val_loss</code> به ازای هر <code class="highlighter-rouge">epoch</code> است. <code class="highlighter-rouge">loss</code> نشان دهنده میزان loss بر روی داده های یادگیری و <code class="highlighter-rouge">val_loss</code> نشان‌دهنده میزان loss بر روی داده‌های ارزیابی (validation) است. 
+با استفاده از کتابخانه <code class="highlighter-rouge">matplotlib</code> می‌توانیم نمودار این مقادیر را رسم کنیم.</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span></code></pre></figure>
+
+<p>در کد پایین، رسم نمودار توسط دو خط بالا انجام می‌شود؛ نمایش نمودار نیز در خط آخر انجام می‌شود. چهار خط میانی، عناوین ستون ها و نمودار را مشخص می‌کنند.</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">plt</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">history</span><span class="p">.</span><span class="n">history</span><span class="p">[</span><span class="s">'loss'</span><span class="p">])</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">history</span><span class="p">.</span><span class="n">history</span><span class="p">[</span><span class="s">'val_loss'</span><span class="p">])</span>
+
+<span class="n">plt</span><span class="p">.</span><span class="n">title</span><span class="p">(</span><span class="s">'Model loss'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s">'Loss'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s">'Epoch'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">legend</span><span class="p">([</span><span class="s">'Train'</span><span class="p">,</span> <span class="s">'Validation'</span><span class="p">],</span> <span class="n">loc</span><span class="o">=</span><span class="s">'upper left'</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span></code></pre></figure>
+
+<p>نمودار خروجی به صورت زیر است:</p>
+
+<figure class="image">
+  <!--<a href="/assets/posts/designing-an-mlp/loss.png"><img src="/assets/posts/designing-an-mlp/loss.png" alt="میزان loss برای داده‌های یادگیری و ارزیابی در حین آموزش"></a>-->
+  <img src="/assets/posts/designing-an-mlp/loss.png" alt="میزان loss برای داده‌های یادگیری و ارزیابی در حین آموزش" />
+  <figcaption>میزان loss برای داده‌های یادگیری و ارزیابی در حین آموزش</figcaption>
+</figure>
+
+<p>همچنین، از آنجا که ما معیار دقت (accuracy) را هم به عنوان یکی از معیار‌های ارزیابی در تابع <code class="highlighter-rouge">compile</code> معرفی کردیم، می‌توانیم میزان دقت در حین یادگیری را بر روی داده های یادگیری و ارزیابی مشاهده کنیم. کد زیر اینکار را انجام می‌دهد.</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">plt</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">history</span><span class="p">.</span><span class="n">history</span><span class="p">[</span><span class="s">'accuracy'</span><span class="p">])</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">history</span><span class="p">.</span><span class="n">history</span><span class="p">[</span><span class="s">'val_accuracy'</span><span class="p">])</span>
+
+<span class="n">plt</span><span class="p">.</span><span class="n">title</span><span class="p">(</span><span class="s">'Model accuracy'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s">'Accuracy'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s">'Epoch'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">legend</span><span class="p">([</span><span class="s">'Train'</span><span class="p">,</span> <span class="s">'Validation'</span><span class="p">],</span> <span class="n">loc</span><span class="o">=</span><span class="s">'upper left'</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span></code></pre></figure>
+
+<p>نمودار خروجی به صورت زیر است. همانطور که مشخص است، مقدار دقت برای داده های یادگیری نزدیک به 90% و برای داده‌های ارزیابی حدود 86% است.</p>
+
+<figure class="image">
+  <!--<a href="/assets/posts/designing-an-mlp/accuracy.png"><img src="/assets/posts/designing-an-mlp/accuracy.png" alt="میزان دقت برای داده‌های یادگیری و ارزیابی در حین آموزش"></a>-->
+  <img src="/assets/posts/designing-an-mlp/accuracy.png" alt="میزان دقت برای داده‌های یادگیری و ارزیابی در حین آموزش" />
+  <figcaption>میزان دقت برای داده‌های یادگیری و ارزیابی در حین آموزش</figcaption>
+</figure>
+
+<h1 id="6-گام-ششم-ارزیابی-شبکه-بر-روی-داده-های-آزمون">6. گام ششم: ارزیابی شبکه بر روی داده های آزمون</h1>
+
+<p>برای ارزیابی شبکه بر روی داده‌های آزمون از تابع <code class="highlighter-rouge">evaluate</code> بر روی مدل استفاده می‌کنیم. در اینجا ما به دقت 86% بر روی داد‌ه‌های آزمون رسیدیم.</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">test_loss</span><span class="p">,</span> <span class="n">test_accuracy</span> <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">test_feats</span><span class="p">,</span> <span class="n">test_target</span><span class="p">[</span><span class="s">'Class'</span><span class="p">])</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">66/66 [==============================] - 0s 1ms/step - loss: 0.3953 - accuracy: 0.8634</code></pre></figure>
+
+<h1 id="7-جمعبندی">7. جمع‌بندی</h1>
+
+<p>در این مقاله، ما نحوه ساخت یک شبکه عصبی برای دسته بندی دو کلاسه با استفاده از کتابخانه keras در پایتون را توضیح دادیم. همانطور که دیدیم، این‌کار خیلی راحت است. نکته مهمی که در این مقاله به آن نپرداختیم، نحوه بهبود مدل است. ان‌شالله در مقاله‌های بعدی به این موارد خواهیم پرداخت.
+شما برای بررسی دقیق‌تر این‌مقاله، می‌توانید همه کد‌ها و فایل‌های استفاده شده را از طریق لینک‌ زیر دریافت کنید:</p>
+
+<ul>
+  <li><a href="https://drive.google.com/drive/folders/1tSGDQ77MdfAb8mUiLSglFyCaydCg8tFN?usp=sharing">پوشه شامل‌ها همه کد‌ها و داده‌ها</a></li>
+</ul>
+
+
+  </div>
+</div>
+
+        <div id="bottomHeightDiv" > </div>
+      </section>
+      <footer>
+		<!--  
+        <p><a href="https://www.aparat.com/alirezatajary">آپارات</a> / <a href="https://t.me/alireza_tajary">تلگرام</a> /  <a href="https://www.youtube.com/channel/UCIjstabhHSSnbUoEe4m2MsA">یوتیوب</a></p>
+        -->
+        <p style="font-size:12px">استفاده از مطالب سایت،
+        <br/>
+         با ذکر منبع مجاز است.</p>
+      </footer>
+    </div>
+<!-- The Modal -->
+<div id="myModal" class="modal">
+
+  <!-- The Close Button -->
+  <span class="close">&times;</span>
+
+  <!-- Modal Content (The Image) -->
+  <img class="modal-content" id="img01">
+
+  <!-- Modal Caption (Image Text) -->
+  <div id="caption"></div>
+</div>    
+    <script src="/assets/javascripts/scale.fix.js"></script>
+<script>
+// Get the modal
+var modal = document.getElementById("myModal");
+
+var modalImg = document.getElementById("img01");
+var captionText = document.getElementById("caption");
+
+var imgs = document.getElementsByTagName("img");
+var i;
+for(i=0;i<imgs.length;i++){
+	var img = imgs[i];
+	img.onclick = function(){
+	  modal.style.display = "block";
+	  modalImg.src = this.src;
+	  captionText.innerHTML = this.alt;
+	}
+}
+var span = document.getElementsByClassName("close")[0];
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+  modal.style.display = "none";
+};
+modal.onclick = function() {
+  modal.style.display = "none";
+};
+document.onkeyup =function(e) {
+     if (e.key === "Escape") { // escape key maps to keycode `27`
+       modal.style.display = "none";
+    }
+};
+</script>
+  </body>
+</html>
